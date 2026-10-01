@@ -106,4 +106,8 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 const _here = path.dirname(fileURLToPath(import.meta.url));
-export const legacy = (id, jump) => ({ id, jump, raw: fs.readFileSync(path.join(_here, 'legacy', id + '.html'), 'utf8') });
+// Los decimales antiguos usaban apóstrofo (0’1); se unifican con la coma del resto de la página (0,1).
+const comaDecimal = (h) => h
+  .replace(/<mn>(\d+)<\/mn><mtext>’<\/mtext><mn>(\d+)<\/mn>/g, '<mn>$1,$2</mn>')
+  .replace(/<mtext>’<\/mtext>/g, '<mtext>,</mtext>');
+export const legacy = (id, jump) => ({ id, jump, raw: comaDecimal(fs.readFileSync(path.join(_here, 'legacy', id + '.html'), 'utf8')) });

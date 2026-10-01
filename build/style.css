@@ -137,7 +137,7 @@ button.chip:active{transform:translateY(2px); box-shadow:0 0 0 var(--line-2)}
   .nv{padding:7px 8px 10px 7px; gap:8px; min-height:56px}
   .nv-n{width:28px; height:28px; border-radius:9px; font-size:.9rem}
   .nv-t{font-size:.9rem}
-  .nv-jump span{display:none} .nv-jump{padding:4px 10px}
+  .nv-jump span{display:none} .nv-jump{padding:4px 10px; min-width:44px; justify-content:center}
   .nv-title{font-size:.95rem; padding-inline:9px; gap:7px}
   .nv-arrow{width:42px}
 }

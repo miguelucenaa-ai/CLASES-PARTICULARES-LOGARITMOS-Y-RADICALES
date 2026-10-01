@@ -31,6 +31,16 @@
       f.classList.remove('split');
       if (w.scrollWidth > w.clientWidth + 1) f.classList.add('split');
     });
+    /* fórmulas dentro de una frase que no caben: se envuelven para que se desplacen en su caja */
+    $$('p math, li math, td math', rootEl).forEach(function (m) {
+      if (m.classList.contains('tml-display') || m.closest('.fw, .fn, .im-long')) return;
+      var host = m.parentElement; if (!host || !host.offsetParent) return;
+      var a = m.getBoundingClientRect(), b = host.getBoundingClientRect();
+      if (a.right > b.right + 1 || a.width > b.width + 1) {
+        var w = document.createElement('span'); w.className = 'im-long';
+        m.parentNode.insertBefore(w, m); w.appendChild(m);
+      }
+    });
   }
 
   /* ---------- Progreso (ejercicios marcados como "Lo tengo") ---------- */
@@ -103,7 +113,18 @@
     if (el) el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
   });
   document.addEventListener('click', function (e) { if ((!popApt.hidden || !popJump.hidden) && !bar.contains(e.target)) closePops(); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closePops(); closeSheet(); } });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { closePops(); closeSheet(); return; }
+    /* el panel de progreso mantiene el foco dentro mientras está abierto */
+    if (e.key === 'Tab' && sheet && !sheet.hidden) {
+      var f = $$('button', sheet).filter(function (b) { return b.offsetParent !== null; });
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { last.focus(); e.preventDefault(); }
+      else if (!e.shiftKey && document.activeElement === last) { first.focus(); e.preventDefault(); }
+      else if (!sheet.contains(document.activeElement)) { first.focus(); e.preventDefault(); }
+    }
+  });
 
   /* ---------- Ejemplos y ejercicios: pasos que se van mostrando ---------- */
   var exs = $$('.ex');

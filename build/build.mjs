@@ -28,7 +28,7 @@ for (const f of order) {
 
 for (const P of list) if (hard[P.id]) P.sections.push(hard[P.id]);
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
-const nodesHTML = list.map(P => `<li><button type="button" role="tab" class="nv" id="tab-${P.id}" aria-controls="panel-${P.id}" data-tab="${P.id}" data-num="${P.num}" data-title="${esc(P.tab)}" data-hue="${P.color[0]}" style="--hue:${P.color[0]}"><span class="nv-n">${P.num}</span><span class="nv-t">${esc(P.tab)}</span><i class="nv-p"></i></button></li>`).join('');
+const nodesHTML = list.map(P => `<li role="presentation"><button type="button" role="tab" class="nv" id="tab-${P.id}" aria-controls="panel-${P.id}" data-tab="${P.id}" data-num="${P.num}" data-title="${esc(P.tab)}" data-hue="${P.color[0]}" style="--hue:${P.color[0]}"><span class="nv-n">${P.num}</span><span class="nv-t">${esc(P.tab)}</span><i class="nv-p"></i></button></li>`).join('');
 const popHTML = list.map(P => `<li><button type="button" class="nv" data-pop="${P.id}" data-hue="${P.color[0]}" style="--hue:${P.color[0]}"><span class="nv-n">${P.num}</span><span class="nv-t">${esc(P.tab)}</span><span class="pop-c"></span></button></li>`).join('');
 const jumpHTML = list.map(P => `<nav class="jump" data-for="${P.id}" aria-label="Secciones de ${esc(P.tab)}" hidden>${P.sections.map(s => `<button type="button" data-jump="${s.id}">${s.jump}</button>`).join('')}</nav>`).join('');
 const panelsHTML = list.map((P, i) => buildPanel(P, list[i - 1], list[i + 1])).join('\n');
@@ -50,9 +50,9 @@ const tokens = `
   --lift:0%;
   --paper:#f2f6fa; --grid:rgba(40,90,170,.095);
   --card:#ffffff; --card-2:#f6f9fc; --line:#dde6ef; --line-2:#bfcedd;
-  --ink:#0e1a33; --ink-2:#425068; --ink-3:#6b7893;
+  --ink:#0e1a33; --ink-2:#425068; --ink-3:#5b6883;
   --hi:#ffe45e; --hi-soft:#fff7c4; --hi-mark:#ffe45e;
-  --red:#d12e45; --blue:#1d4ed8; --teal:#0b8789; --violet:#6d3fd3; --orange:#b45309; --ok:#12803f;
+  --red:#c4283d; --blue:#1d4ed8; --teal:#0a7a7c; --violet:#6d3fd3; --orange:#b45309; --ok:#107337;
   --c3:var(--red);
   --on-acc:#fff; --on-h:#fff; --on-k:#fff;
   color-scheme:light;
@@ -93,6 +93,18 @@ ${read('style.css')}
 .key b:first-child{background:linear-gradient(transparent 55%, var(--hi-mark) 55%)}
 .hero h1 .mk::before{background:var(--hi-mark)}
 .l-z{--k:var(--blue)} .l-q{--k:var(--teal)} .l-i{--k:var(--red)}
+/* Navegadores antiguos (iOS < 16.2) sin color-mix(): colores sólidos equivalentes */
+@supports not (color: color-mix(in srgb, red 50%, blue)){
+  .panel{--acc:var(--hue); --acc-soft:var(--card-2); --acc-line:var(--line-2)}
+  .nv, .pr-item{--h:var(--hue)}
+  .pg{--k:var(--hue)}
+  .bar{--cur:var(--hue-cur, #2451c7); background:var(--paper)}
+  .nv-n, .nv-title, .case-dot.c1, .case-badge.cc1, .case-dot.c2, .case-badge.cc2, .case-dot.c3, .case-badge.cc3, .ex-res, .errs li, .okline, .ex.mastered .b-done, .ex-steps > li.cur{background:var(--card-2)}
+  .nv-title{border-color:var(--cur)}
+  .ex-res, .okline, .ex.mastered{border-color:var(--ok)}
+  .errs li{border-color:var(--red)}
+  .ex.example .ex-steps > li.cur{background:var(--card)}
+}
 </style></head>
 <body>
 <div class="page">
@@ -117,8 +129,8 @@ ${read('style.css')}
 <div class="bar">
   <div class="nv-sub">
     <button type="button" class="nv-arrow" id="nv-prev" aria-label="Apartado anterior">${I.left}</button>
-    <button type="button" class="nv-title" id="nv-title" aria-haspopup="true" aria-expanded="false" aria-label="Ver todos los apartados"><b></b><span></span>${I.down}</button>
-    <button type="button" class="nv-jump" aria-haspopup="true" aria-expanded="false"><span>Saltar a</span>${I.down}</button>
+    <button type="button" class="nv-title" id="nv-title" aria-haspopup="true" aria-expanded="false"><b>${list[0].num}</b><span>${esc(list[0].tab)}</span>${I.down}</button>
+    <button type="button" class="nv-jump" aria-haspopup="true" aria-expanded="false" aria-label="Saltar a una sección de este apartado"><span>Saltar a</span>${I.down}</button>
     <button type="button" class="nv-arrow" id="nv-next" aria-label="Apartado siguiente">${I.right}</button>
   </div>
   <div class="pop pop-apartados" hidden><ol class="pop-list">${popHTML}</ol></div>

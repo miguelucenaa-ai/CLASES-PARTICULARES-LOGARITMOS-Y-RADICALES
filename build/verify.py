@@ -21,6 +21,8 @@ for d in data:
         for _ in range(trials):
             sub = {s: (Rational(random.randint(-40, 40), random.randint(1, 7)) if anyv else Rational(random.randint(2, 40), random.randint(1, 7))) for s in syms}
             diff = N((A - B).subs(sub), 40)
+            if diff.has(nan, zoo, oo, -oo):
+                continue  # valores que anulan un denominador: se descartan
             if abs(diff) > 1e-25:
                 ok = False
                 break

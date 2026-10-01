@@ -1,4 +1,5 @@
 import { p, key, tip, formula, sub, recipe, table, cards, props, errs, ex, grid, legacy } from '../lib.mjs';
+import { racExtra } from './rac-extra.mjs';
 const r = String.raw;
 
 /* ---------- Raíz enésima ---------- */
@@ -371,6 +372,6 @@ export default {
     legacy('rac-c3', 'Caso 3'),
     legacy('rac-err', 'Errores (racionalizar)'),
     legacy('rac-col', 'Ejercicios del colegio'),
-    legacy('rac-add', 'Más racionalización'),
+    racExtra,
   ],
 };

@@ -29,3 +29,9 @@ Cada resultado lleva un campo `chk: [enunciado, resultado]` que se comprueba con
 python -m venv venv && venv/Scripts/pip install sympy   # una vez
 venv/Scripts/python build/verify.py
 ```
+
+## Auditoría
+
+```bash
+python build/audit.py     # estructura, enlaces, ids, pasos, repetidos, accesibilidad
+```

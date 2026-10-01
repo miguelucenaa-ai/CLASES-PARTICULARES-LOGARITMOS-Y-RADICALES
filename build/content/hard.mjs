@@ -224,6 +224,56 @@ const radic = sec('rad', r`Operaciones combinadas con radicales: **simplifica ca
       { t: r`Llamo $a=\sqrt[3]2$. Entonces $\sqrt[3]4=a^2$ y $a^3=2$.`, m: r`(a+1)(a^2-a+1)` },
       { t: r`Es la suma de cubos: $(a+1)(a^2-a+1)=a^3+1$.`, m: r`a^3+1=2+1` },
     ], res: r`3` }),
+  H({ id: 'hd-ra9', tag: 'Raíz de producto', q: r`\sqrt[4]{\sqrt{3}\cdot\sqrt[3]{9}}`, chk: ['root(sqrt(3)*root(9,3),4)', 'root(3**7,24)'],
+    steps: [
+      { t: r`Todo a potencias de 3: $\sqrt3=3^{1/2}$ y $\sqrt[3]9=3^{2/3}$.`, m: r`\sqrt[4]{3^{1/2}\cdot3^{2/3}}` },
+      { t: r`Dentro: sumo exponentes (denominador común 6).`, m: r`3^{\frac12+\frac23}=3^{\frac36+\frac46}=3^{7/6}` },
+      { t: r`La raíz cuarta multiplica el exponente por $\frac14$.`, m: r`\left(3^{7/6}\right)^{1/4}=3^{7/24}` },
+      { t: r`Vuelvo a radical.`, m: r`3^{7/24}=\sqrt[24]{3^7}=\sqrt[24]{2187}` },
+    ], res: r`\sqrt[24]{3^{7}}` }),
+  H({ id: 'hd-ra10', tag: 'Racionaliza (índice 3)', q: r`\dfrac{3}{\sqrt[3]{4}}`, chk: ['3/root(4,3)', '3*root(2,3)/2'],
+    steps: [
+      { t: r`Abajo hay $\sqrt[3]{4}=\sqrt[3]{2^2}$: para llegar a $2^3$ le falta un $2$. Multiplico arriba y abajo por $\sqrt[3]{2}$.`, why: r`Así abajo queda $\sqrt[3]{2^2}\cdot\sqrt[3]2=\sqrt[3]{2^3}=2$.`, m: r`\dfrac{3}{\sqrt[3]{4}}\cdot\dfrac{\sqrt[3]{2}}{\sqrt[3]{2}}=\dfrac{3\sqrt[3]{2}}{\sqrt[3]{8}}` },
+      { t: r`$\sqrt[3]8=2$.`, m: r`\dfrac{3\sqrt[3]2}{2}` },
+    ], res: r`\dfrac{3\sqrt[3]{2}}{2}` }),
+  H({ id: 'hd-ra11', tag: 'Racionaliza', q: r`\dfrac{\sqrt5+\sqrt2}{\sqrt5-\sqrt2}`, chk: ['(sqrt(5)+sqrt(2))/(sqrt(5)-sqrt(2))', '(7+2*sqrt(10))/3'],
+    steps: [
+      { t: r`Multiplico por el conjugado del denominador, $\sqrt5+\sqrt2$.`, m: r`\dfrac{(\sqrt5+\sqrt2)^2}{(\sqrt5-\sqrt2)(\sqrt5+\sqrt2)}` },
+      { t: r`Abajo: suma por diferencia, $5-2=3$.`, m: r`(\sqrt5-\sqrt2)(\sqrt5+\sqrt2)=3` },
+      { t: r`Arriba: cuadrado de una suma. Y $\sqrt5\cdot\sqrt2=\sqrt{10}$.`, m: r`(\sqrt5+\sqrt2)^2=5+2\sqrt{10}+2=7+2\sqrt{10}` },
+    ], res: r`\dfrac{7+2\sqrt{10}}{3}` }),
+  H({ id: 'hd-ra12', tag: 'Producto de tres', q: r`\sqrt{12}\cdot\sqrt[3]{9}\cdot\sqrt[6]{27}`, chk: ['sqrt(12)*root(9,3)*root(27,6)', '6*root(9,3)'],
+    steps: [
+      { t: r`Descompongo y paso a potencias: $12=2^2\cdot3$, $9=3^2$, $27=3^3$.`, m: [r`\sqrt{12}=2\cdot3^{1/2}`, r`\sqrt[3]9=3^{2/3}`, r`\sqrt[6]{27}=3^{3/6}=3^{1/2}`] },
+      { t: r`Multiplico: el $2$ aparte y los $3$ suman exponentes ($\frac12+\frac23+\frac12=\frac53$).`, m: r`2\cdot3^{\frac12+\frac23+\frac12}=2\cdot3^{5/3}` },
+      { t: r`Extraigo: $3^{5/3}=3\cdot3^{2/3}$.`, m: r`2\cdot3\cdot3^{2/3}=6\sqrt[3]{9}` },
+    ], res: r`6\sqrt[3]{9}` }),
+  H({ id: 'hd-ra13', tag: 'Productos notables', q: r`\left(\sqrt5-\sqrt3\right)^2+\left(\sqrt5+\sqrt3\right)^2`, chk: ['(sqrt(5)-sqrt(3))**2+(sqrt(5)+sqrt(3))**2', '16'],
+    steps: [
+      { t: r`Desarrollo cada cuadrado.`, m: [r`(\sqrt5-\sqrt3)^2=5-2\sqrt{15}+3`, r`(\sqrt5+\sqrt3)^2=5+2\sqrt{15}+3`] },
+      { t: r`Sumo: los términos con $\sqrt{15}$ se cancelan.`, m: r`(8-2\sqrt{15})+(8+2\sqrt{15})=16` },
+    ], res: r`16` }),
+  H({ id: 'hd-ra14', tag: 'Simplifica', q: r`\dfrac{\sqrt{75}-\sqrt{48}}{\sqrt{12}}`, chk: ['(sqrt(75)-sqrt(48))/sqrt(12)', 'Rational(1,2)'],
+    steps: [
+      { t: r`Extraigo factores.`, m: r`\sqrt{75}=5\sqrt3\qquad\sqrt{48}=4\sqrt3\qquad\sqrt{12}=2\sqrt3` },
+      { t: r`Numerador: $5\sqrt3-4\sqrt3=\sqrt3$. Después simplifico $\sqrt3$.`, m: r`\dfrac{\sqrt3}{2\sqrt3}=\dfrac12` },
+    ], res: r`\dfrac12` }),
+  H({ id: 'hd-ra15', tag: 'Extrae con letras', q: r`\sqrt[3]{40\,x^{4}y^{7}}`, chk: ['root(40*x**4*y**7,3)', '2*x*y**2*root(5*x*y,3)'],
+    steps: [
+      { t: r`Descompongo: $40=2^3\cdot5$. Y divido los exponentes de las letras entre 3.`, m: [r`x^4=x^3\cdot x\quad(4\div3=1\ \text{resto}\ 1)`, r`y^7=y^6\cdot y=(y^2)^3\cdot y\quad(7\div3=2\ \text{resto}\ 1)`] },
+      { t: r`Saco los cubos; dentro quedan $5$, $x$ e $y$.`, m: r`\sqrt[3]{2^3\cdot5\cdot x^3\cdot x\cdot(y^2)^3\cdot y}=2\cdot x\cdot y^2\cdot\sqrt[3]{5xy}` },
+    ], res: r`2xy^{2}\sqrt[3]{5xy}` }),
+  H({ id: 'hd-ra16', tag: 'Problema', task: r`Un rectángulo mide $\sqrt{12}$ cm de ancho y $\sqrt6$ cm de alto. Calcula la longitud de su diagonal.`, chk: ['sqrt(12+6)', '3*sqrt(2)'],
+    steps: [
+      { t: r`La diagonal es la hipotenusa del triángulo rectángulo de catetos $\sqrt{12}$ y $\sqrt6$ (Pitágoras).`, m: r`d=\sqrt{\left(\sqrt{12}\right)^2+\left(\sqrt6\right)^2}=\sqrt{12+6}` },
+      { t: r`$18=3^2\cdot2$: extraigo factores.`, m: r`d=\sqrt{18}=3\sqrt2` },
+    ], resTxt: r`$d=3\sqrt2\approx4{,}24$ cm.` }),
+  H({ id: 'hd-ra17', tag: 'Ordena', task: r`Ordena de menor a mayor: $2\sqrt3,\ 3\sqrt2,\ \sqrt[3]{40}$.`,
+    steps: [
+      { t: r`Introduzco los números dentro de las raíces.`, m: r`2\sqrt3=\sqrt{12}\qquad3\sqrt2=\sqrt{18}\qquad\sqrt[3]{40}` },
+      { t: r`Índices $2$, $2$ y $3$: $\text{mcm}=6$. Elevo cada radicando a $6\div\text{índice}$.`, m: [r`\sqrt{12}=\sqrt[6]{12^3}=\sqrt[6]{1728}`, r`\sqrt{18}=\sqrt[6]{18^3}=\sqrt[6]{5832}`, r`\sqrt[3]{40}=\sqrt[6]{40^2}=\sqrt[6]{1600}`] },
+      { t: r`Mismo índice: ordeno los radicandos.`, m: r`1600<1728<5832` },
+    ], res: r`\sqrt[3]{40}<2\sqrt3<3\sqrt2`, note: r`En decimales: $3{,}42<3{,}46<4{,}24$.` }),
 ]);
 
 /* ---------- 9. Potencias ---------- */
@@ -331,6 +381,64 @@ const logs = sec('log', r`Del estilo de los ejercicios 14–22 de tu PDF: **todo
       { t: r`$\log_381=4$ (porque $3^4=81$).`, m: r`\sqrt{\log_381}=\sqrt4` },
       { t: r`Raíz.`, m: r`\sqrt4=2` },
     ], resTxt: r`Vale $2$: **natural**.` }),
+  H({ id: 'hd-lo12', tag: 'Cambio de base', q: r`\log_48+\log_84`, chk: ['log(8,4)+log(4,8)', 'Rational(13,6)'],
+    steps: [
+      { t: r`Los dos se pueden pasar a base 2: $4=2^2$ y $8=2^3$.`, m: r`\log_48=\dfrac{\log_28}{\log_24}=\dfrac32\qquad\log_84=\dfrac{\log_24}{\log_28}=\dfrac23` },
+      { t: r`Sumo (denominador común 6).`, m: r`\dfrac32+\dfrac23=\dfrac96+\dfrac46=\dfrac{13}{6}` },
+    ], res: r`\dfrac{13}{6}` }),
+  H({ id: 'hd-lo13', tag: 'Bases con raíces', q: r`\log_{\sqrt3}\dfrac19+\log_9\sqrt3`, chk: ['log(Rational(1,9),sqrt(3))+log(sqrt(3),9)', '-Rational(15,4)'],
+    steps: [
+      { t: r`**Primero:** $\left(\sqrt3\right)^x=\frac19$. Todo en base 3: $\sqrt3=3^{1/2}$ y $\frac19=3^{-2}$.`, m: r`3^{x/2}=3^{-2}\ \Rightarrow\ \dfrac x2=-2\ \Rightarrow\ x=-4` },
+      { t: r`**Segundo:** $9^y=\sqrt3$. Escribo $9=3^2$.`, m: r`3^{2y}=3^{1/2}\ \Rightarrow\ 2y=\dfrac12\ \Rightarrow\ y=\dfrac14` },
+      { t: r`Sumo.`, m: r`-4+\dfrac14=-\dfrac{16}{4}+\dfrac14=-\dfrac{15}{4}` },
+    ], res: r`-\dfrac{15}{4}` }),
+  H({ id: 'hd-lo14', tag: 'Ecuación', task: r`Resuelve $\log_3(x+2)-\log_3(x-4)=2$.`, chk: ['log(Rational(19,4)+2,3)-log(Rational(19,4)-4,3)', '2'],
+    steps: [
+      { t: r`Resta de logaritmos con la misma base: logaritmo del **cociente**.`, m: r`\log_3\dfrac{x+2}{x-4}=2` },
+      { t: r`Definición: el cociente vale $3^2=9$.`, m: r`\dfrac{x+2}{x-4}=9` },
+      { t: r`Multiplico en cruz y resuelvo.`, m: r`x+2=9x-36\ \Rightarrow\ 38=8x\ \Rightarrow\ x=\dfrac{19}{4}` },
+      { t: r`**Dominio:** $x+2>0$ y $x-4>0$, o sea $x>4$. Y $\frac{19}{4}=4{,}75>4$.` },
+    ], resTxt: r`**Solución: $x=\dfrac{19}{4}$.**` }),
+  H({ id: 'hd-lo15', tag: 'Ecuación', task: r`Resuelve $\log x+\log(x-3)=1$.`, chk: ['log(5,10)+log(2,10)', '1'],
+    steps: [
+      { t: r`Suma → logaritmo del producto. Y $1=\log10$.`, m: r`\log\big[x(x-3)\big]=\log10` },
+      { t: r`Igualo los argumentos y llevo todo a un lado.`, m: r`x^2-3x=10\ \Rightarrow\ x^2-3x-10=0` },
+      { t: r`Resuelvo la ecuación de segundo grado.`, m: r`x=\dfrac{3\pm\sqrt{9+40}}{2}=\dfrac{3\pm7}{2}\ \Rightarrow\ x=5\ \text{o}\ x=-2` },
+      { t: r`**Dominio:** $x>0$ y $x-3>0$, es decir $x>3$. Descarto $x=-2$.` },
+    ], resTxt: r`**Solución: $x=5$.** (Compruebo: $\log5+\log2=\log10=1$ ✔️)` }),
+  H({ id: 'hd-lo16', tag: 'Exponencial con cambio de variable', task: r`Resuelve $3^{2x}-4\cdot3^{x}+3=0$.`,
+    steps: [
+      { t: r`$3^{2x}=\left(3^x\right)^2$. Llamo $t=3^x$.`, m: r`t^2-4t+3=0` },
+      { t: r`Resuelvo: $(t-1)(t-3)=0$.`, m: r`t=1\quad\text{o}\quad t=3` },
+      { t: r`Deshago el cambio: $3^x=t$.`, m: r`3^x=1\Rightarrow x=0\qquad3^x=3\Rightarrow x=1` },
+    ], resTxt: r`**$x=0$ y $x=1$.** (Compruebo con $x=1$: $9-12+3=0$ ✔️)` }),
+  H({ id: 'hd-lo17', tag: 'Cambio de base', q: r`\dfrac{\log_25}{\log_85}`, chk: ['log(5,2)/log(5,8)', '3'],
+    steps: [
+      { t: r`Paso $\log_85$ a base 2: $\log_85=\dfrac{\log_25}{\log_28}=\dfrac{\log_25}{3}$.`, m: r`\log_85=\dfrac{\log_25}{3}` },
+      { t: r`Sustituyo y simplifico $\log_25$.`, m: r`\dfrac{\log_25}{\frac{\log_25}{3}}=3` },
+    ], res: r`3` }),
+  H({ id: 'hd-lo18', tag: 'Con datos literales', task: r`Con $a=\log2$ y $b=\log3$, expresa $\log15$ y $\log1{,}2$.`, chk: ['log(15,10)', 'log(3,10)+1-log(2,10)'],
+    steps: [
+      { t: r`$15=3\cdot5$ y $5=\dfrac{10}{2}$, así que $\log5=1-a$.`, m: r`\log15=\log3+\log5=b+(1-a)` },
+      { t: r`$1{,}2=\dfrac{12}{10}$ y $12=2^2\cdot3$.`, m: r`\log1{,}2=\log12-\log10=2a+b-1` },
+    ], resTxt: r`$\log15=1-a+b$ y $\log1{,}2=2a+b-1$.` }),
+  H({ id: 'hd-lo19', tag: 'Base desconocida', task: r`Calcula $x$: $\log_x(2x)=2$.`, chk: ['log(2*2,2)', '2'],
+    steps: [
+      { t: r`Definición: la base elevada al resultado da el argumento.`, m: r`x^2=2x` },
+      { t: r`Paso todo a un lado y saco factor común.`, m: r`x^2-2x=0\ \Rightarrow\ x(x-2)=0\ \Rightarrow\ x=0\ \text{o}\ x=2` },
+      { t: r`La base tiene que ser positiva y distinta de 1: descarto $x=0$.` },
+    ], resTxt: r`**Solución: $x=2$.** (Compruebo: $\log_24=2$ ✔️)` }),
+  H({ id: 'hd-lo20', tag: 'Sistema', task: r`Resuelve el sistema $\begin{cases}\log x+\log y=3\\ \log x-\log y=1\end{cases}$`,
+    steps: [
+      { t: r`Sumo las dos ecuaciones: se cancela $\log y$.`, m: r`2\log x=4\ \Rightarrow\ \log x=2\ \Rightarrow\ x=10^2=100` },
+      { t: r`Sustituyo en la primera.`, m: r`2+\log y=3\ \Rightarrow\ \log y=1\ \Rightarrow\ y=10` },
+    ], resTxt: r`**$x=100$ e $y=10$.** (Compruebo: $\log100+\log10=3$ y $\log100-\log10=1$ ✔️)` }),
+  H({ id: 'hd-lo21', tag: 'Problema', task: r`Un capital crece un $4\,\%$ cada año. ¿Cuántos años tarda en duplicarse?`,
+    steps: [
+      { t: r`Tras $t$ años el capital se multiplica por $1{,}04^t$. Quiero que valga el doble.`, m: r`1{,}04^{\,t}=2` },
+      { t: r`Tomo logaritmos: el exponente baja delante.`, m: r`t\cdot\log1{,}04=\log2` },
+      { t: r`Despejo $t$ con la calculadora.`, m: r`t=\dfrac{\log2}{\log1{,}04}=\dfrac{0{,}30103}{0{,}01703}\approx17{,}67` },
+    ], resTxt: r`Tarda unos **17,7 años** (más de 17 y menos de 18).` }),
 ]);
 
 export const hard = {
