@@ -5,6 +5,7 @@ import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
 import { buildPanel, checks } from './lib.mjs';
 import { heroLine } from './svg.mjs';
+import { hard } from './content/hard.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(here, '..');
@@ -25,6 +26,7 @@ for (const f of order) {
   list.push((await import(pathToFileURL(file).href)).default);
 }
 
+for (const P of list) if (hard[P.id]) P.sections.push(hard[P.id]);
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 const nodesHTML = list.map(P => `<li><button type="button" role="tab" class="nv" id="tab-${P.id}" aria-controls="panel-${P.id}" data-tab="${P.id}" data-num="${P.num}" data-title="${esc(P.tab)}" data-hue="${P.color[0]}" style="--hue:${P.color[0]}"><span class="nv-n">${P.num}</span><span class="nv-t">${esc(P.tab)}</span><i class="nv-p"></i></button></li>`).join('');
 const popHTML = list.map(P => `<li><button type="button" class="nv" data-pop="${P.id}" data-hue="${P.color[0]}" style="--hue:${P.color[0]}"><span class="nv-n">${P.num}</span><span class="nv-t">${esc(P.tab)}</span><span class="pop-c"></span></button></li>`).join('');

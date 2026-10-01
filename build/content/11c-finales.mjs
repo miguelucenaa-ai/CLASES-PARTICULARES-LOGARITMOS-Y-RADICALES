@@ -28,7 +28,7 @@ export const sint = {
   body: [
     sub('20. Calcula x'),
     grid([
-      ex({ id: 'fin-20', tag: 'Ejercicio 20', q: r`\log_{\sqrt3}x+\log_{\sqrt3}x^{2}=9`, chk: ['log(3*sqrt(3),sqrt(3))+log((3*sqrt(3))**2,sqrt(3))', '9'],
+      ex({ hard: true, id: 'fin-20', tag: 'Ejercicio 20', q: r`\log_{\sqrt3}x+\log_{\sqrt3}x^{2}=9`, chk: ['log(3*sqrt(3),sqrt(3))+log((3*sqrt(3))**2,sqrt(3))', '9'],
         steps: [
           { t: r`Los dos logaritmos tienen la misma base: **suma → producto**.`, m: r`\log_{\sqrt3}\left(x\cdot x^2\right)=9\ \Rightarrow\ \log_{\sqrt3}x^3=9` },
           { t: r`Potencia → el exponente baja delante.`, m: r`3\log_{\sqrt3}x=9` },
@@ -38,20 +38,20 @@ export const sint = {
     ]),
     sub('21. Clasifica los siguientes números reales'),
     grid([
-      ex({ id: 'fin-21a', tag: 'Ejercicio 21(a)', q: r`\sqrt{5^{-\log_5 10}}-\dfrac{\sqrt{10}}{10}`, chk: ['sqrt(5**(-log(10,5)))-sqrt(10)/10', '0'],
+      ex({ hard: true, id: 'fin-21a', tag: 'Ejercicio 21(a)', q: r`\sqrt{5^{-\log_5 10}}-\dfrac{\sqrt{10}}{10}`, chk: ['sqrt(5**(-log(10,5)))-sqrt(10)/10', '0'],
         steps: [
           { t: r`Propiedad: $a^{\log_a N}=N$. Con el signo menos, el resultado se invierte.`, m: r`5^{-\log_5 10}=\left(5^{\log_5 10}\right)^{-1}=10^{-1}=\dfrac1{10}` },
           { t: r`La raíz de $\frac1{10}$, racionalizando.`, m: r`\sqrt{\dfrac{1}{10}}=\dfrac{1}{\sqrt{10}}=\dfrac{\sqrt{10}}{10}` },
           { t: r`Resto.`, m: r`\dfrac{\sqrt{10}}{10}-\dfrac{\sqrt{10}}{10}=0` },
         ], resTxt: r`Vale $0$: **entero** (no natural), racional y real.` }),
-      ex({ id: 'fin-21b', tag: 'Ejercicio 21(b)', q: r`\dfrac{\left(1+\sqrt5\right)^3}{8}-\dfrac{3+\sqrt5}{\sqrt5-1}`, chk: ['(1+sqrt(5))**3/8-(3+sqrt(5))/(sqrt(5)-1)', '0'],
+      ex({ hard: true, id: 'fin-21b', tag: 'Ejercicio 21(b)', q: r`\dfrac{\left(1+\sqrt5\right)^3}{8}-\dfrac{3+\sqrt5}{\sqrt5-1}`, chk: ['(1+sqrt(5))**3/8-(3+sqrt(5))/(sqrt(5)-1)', '0'],
         steps: [
           { t: r`Primer término: desarrollo el cubo, $(a+b)^3=a^3+3a^2b+3ab^2+b^3$.`, m: r`(1+\sqrt5)^3=1+3\sqrt5+3\cdot5+5\sqrt5=16+8\sqrt5` },
           { t: r`Divido entre 8.`, m: r`\dfrac{16+8\sqrt5}{8}=2+\sqrt5` },
           { t: r`Segundo término: racionalizo con el conjugado $\sqrt5+1$.`, m: r`\dfrac{(3+\sqrt5)(\sqrt5+1)}{(\sqrt5-1)(\sqrt5+1)}=\dfrac{3\sqrt5+3+5+\sqrt5}{5-1}=\dfrac{8+4\sqrt5}{4}=2+\sqrt5` },
           { t: r`Resto.`, m: r`(2+\sqrt5)-(2+\sqrt5)=0` },
         ], resTxt: r`Vale $0$: **entero**, racional y real.` }),
-      ex({ id: 'fin-21c', tag: 'Ejercicio 21(c)', q: r`\dfrac{1-\left(\frac32\right)^{-\log_2 8}}{\left(3^2+2\left(\frac13\right)^{-2}\right)^{-1}}`, chk: ['(1-(Rational(3,2))**(-log(8,2)))/((3**2+2*(Rational(1,3))**(-2))**(-1))', '19'],
+      ex({ hard: true, id: 'fin-21c', tag: 'Ejercicio 21(c)', q: r`\dfrac{1-\left(\frac32\right)^{-\log_2 8}}{\left(3^2+2\left(\frac13\right)^{-2}\right)^{-1}}`, chk: ['(1-(Rational(3,2))**(-log(8,2)))/((3**2+2*(Rational(1,3))**(-2))**(-1))', '19'],
         steps: [
           { t: r`$\log_2 8=3$ (porque $2^3=8$).`, m: r`\log_28=3` },
           { t: r`Numerador: exponente $-3$ → doy la vuelta a la fracción.`, m: r`1-\left(\dfrac32\right)^{-3}=1-\left(\dfrac23\right)^{3}=1-\dfrac{8}{27}=\dfrac{19}{27}` },
@@ -59,7 +59,7 @@ export const sint = {
           { t: r`Y el exponente $-1$ del paréntesis.`, m: r`27^{-1}=\dfrac1{27}` },
           { t: r`Divido: multiplico por $27$.`, m: r`\dfrac{19/27}{1/27}=19` },
         ], resTxt: r`Vale $19$: **natural** (y entero, racional y real).` }),
-      ex({ id: 'fin-21d', tag: 'Ejercicio 21(d)', q: r`\sqrt{2\sqrt{2\sqrt{\log_2\dfrac{0{,}16}{10^{-2}}}}}`, chk: ['sqrt(2*sqrt(2*sqrt(log(Rational(16,100)/10**(-2),2))))', '2'],
+      ex({ hard: true, id: 'fin-21d', tag: 'Ejercicio 21(d)', q: r`\sqrt{2\sqrt{2\sqrt{\log_2\dfrac{0{,}16}{10^{-2}}}}}`, chk: ['sqrt(2*sqrt(2*sqrt(log(Rational(16,100)/10**(-2),2))))', '2'],
         steps: [
           { t: r`Lo más profundo: $\dfrac{0{,}16}{10^{-2}}=0{,}16\cdot100=16$.`, m: r`\log_2\dfrac{0{,}16}{10^{-2}}=\log_216=4` },
           { t: r`Raíz de 4.`, m: r`\sqrt{4}=2` },
@@ -69,7 +69,7 @@ export const sint = {
     ]),
     sub('22. Calcula el valor de'),
     grid([
-      ex({ id: 'fin-22a', tag: 'Ejercicio 22(a)', q: r`\log_{\frac12}\sqrt{\dfrac{16\sqrt5}{\sqrt{125}+\sqrt{45}}}`, chk: ['log(sqrt(16*sqrt(5)/(sqrt(125)+sqrt(45))),Rational(1,2))', '-Rational(1,2)'],
+      ex({ hard: true, id: 'fin-22a', tag: 'Ejercicio 22(a)', q: r`\log_{\frac12}\sqrt{\dfrac{16\sqrt5}{\sqrt{125}+\sqrt{45}}}`, chk: ['log(sqrt(16*sqrt(5)/(sqrt(125)+sqrt(45))),Rational(1,2))', '-Rational(1,2)'],
         steps: [
           { t: r`Extraigo factores en el denominador.`, m: r`\sqrt{125}=5\sqrt5\qquad\sqrt{45}=3\sqrt5` },
           { t: r`Los sumo (semejantes).`, m: r`\sqrt{125}+\sqrt{45}=8\sqrt5` },
@@ -77,20 +77,20 @@ export const sint = {
           { t: r`Queda $\log_{1/2}\sqrt2$. Definición: $\left(\frac12\right)^x=\sqrt2$.`, m: r`\left(2^{-1}\right)^x=2^{1/2}\ \Rightarrow\ 2^{-x}=2^{1/2}` },
           { t: r`Igualo exponentes.`, m: r`-x=\dfrac12\ \Rightarrow\ x=-\dfrac12` },
         ], res: r`-\dfrac12` }),
-      ex({ id: 'fin-22b', tag: 'Ejercicio 22(b)', q: r`-\log_2\left(\log_2\sqrt{\sqrt{2}}\right)`, chk: ['-log(log(sqrt(sqrt(2)),2),2)', '2'],
+      ex({ hard: true, id: 'fin-22b', tag: 'Ejercicio 22(b)', q: r`-\log_2\left(\log_2\sqrt{\sqrt{2}}\right)`, chk: ['-log(log(sqrt(sqrt(2)),2),2)', '2'],
         steps: [
           { t: r`Lo más profundo: raíz de raíz → multiplico índices.`, m: r`\sqrt{\sqrt2}=\sqrt[4]{2}=2^{1/4}` },
           { t: r`$\log_2 2^{1/4}=\dfrac14$.`, m: r`\log_2\sqrt{\sqrt2}=\dfrac14` },
           { t: r`Ahora $\log_2\dfrac14$: $\dfrac14=2^{-2}$.`, m: r`\log_2\dfrac14=-2` },
           { t: r`El signo menos de fuera.`, m: r`-(-2)=2` },
         ], res: r`2` }),
-      ex({ id: 'fin-22c', tag: 'Ejercicio 22(c)', q: r`\sqrt[3]{\left(2+\sqrt2\right)^{-\log_3\frac1{27}}}`, chk: ['root((2+sqrt(2))**(-log(Rational(1,27),3)),3)', '2+sqrt(2)'],
+      ex({ hard: true, id: 'fin-22c', tag: 'Ejercicio 22(c)', q: r`\sqrt[3]{\left(2+\sqrt2\right)^{-\log_3\frac1{27}}}`, chk: ['root((2+sqrt(2))**(-log(Rational(1,27),3)),3)', '2+sqrt(2)'],
         steps: [
           { t: r`El exponente: $\log_3\frac{1}{27}=-3$ (porque $3^{-3}=\frac1{27}$).`, m: r`-\log_3\dfrac1{27}=-(-3)=3` },
           { t: r`Sustituyo.`, m: r`\sqrt[3]{\left(2+\sqrt2\right)^{3}}` },
           { t: r`La raíz cúbica y el cubo se anulan.`, m: r`2+\sqrt2` },
         ], res: r`2+\sqrt2` }),
-      ex({ id: 'fin-22d', tag: 'Ejercicio 22(d)', q: r`\sqrt[6]{\dfrac{\log2+\log4+\log8}{\log2}}`, chk: ['root((log(2)+log(4)+log(8))/log(2),6)', 'root(6,6)'],
+      ex({ hard: true, id: 'fin-22d', tag: 'Ejercicio 22(d)', q: r`\sqrt[6]{\dfrac{\log2+\log4+\log8}{\log2}}`, chk: ['root((log(2)+log(4)+log(8))/log(2),6)', 'root(6,6)'],
         steps: [
           { t: r`Escribo $4=2^2$ y $8=2^3$ y bajo los exponentes.`, m: r`\log4=2\log2\qquad\log8=3\log2` },
           { t: r`Numerador: saco factor común $\log2$.`, m: r`\log2+2\log2+3\log2=6\log2` },

@@ -357,3 +357,10 @@ main{padding-top:4px}
   .ex-steps > li[hidden], .ex-res[hidden], .ex-note[hidden]{display:block !important}
   .blk{box-shadow:none; break-inside:avoid}
 }
+
+/* Nivel difícil */
+.ex-head{display:flex; flex-wrap:wrap; align-items:center; gap:6px}
+.ex-lvl{display:inline-flex; align-items:center; gap:5px; font-size:.7rem; font-weight:800; letter-spacing:.07em; text-transform:uppercase; color:var(--card); background:var(--ink); border-radius:7px; padding:2px 9px}
+.ex-lvl::before{content:'★'; font-size:.8em}
+.ex.hard{border-color:color-mix(in srgb, var(--ink) 40%, var(--line-2)); box-shadow:0 3px 0 color-mix(in srgb, var(--ink) 22%, var(--line))}
+.blk-hard::before{background:linear-gradient(var(--acc), var(--ink))}

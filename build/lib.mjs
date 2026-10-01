@@ -82,8 +82,8 @@ export function ex(o) {
   if (o.chk) checks.push({ id: o.id, chk: o.chk });
   const steps = o.steps.map(s => `<li hidden><p>${tx(s.t)}</p>${s.why ? `<p class="st-why">${tx(s.why)}</p>` : ''}${s.m ? `<div class="m">${lines(s.m)}</div>` : ''}${s.fig ? s.fig : ''}</li>`).join('');
   const res = o.res ? fit(o.res) : (o.resTxt ? `<p class="res-txt">${tx(o.resTxt)}</p>` : '');
-  const cls = ['ex', o.example ? 'example' : '', o.check ? 'check' : ''].filter(Boolean).join(' ');
-  return `<div class="${cls}" id="${o.id}">${o.tag ? `<span class="ex-tag">${tx(o.tag)}</span>` : ''}${o.task ? `<p class="ex-task">${tx(o.task)}</p>` : ''}${o.q ? `<div class="ex-q">${fit(o.q)}</div>` : ''}${o.qfig ? o.qfig : ''}<ol class="ex-steps" aria-live="polite">${steps}</ol><div class="ex-res" hidden><span class="ex-res-t">Resultado</span>${res}</div>${o.note ? `<p class="ex-note" hidden>${tx(o.note)}</p>` : ''}<div class="ex-ctl"><button type="button" class="b-next">Ver paso 1 de ${n}</button><button type="button" class="b-all">Ver solución completa</button></div></div>`;
+  const cls = ['ex', o.example ? 'example' : '', o.check ? 'check' : '', o.hard ? 'hard' : ''].filter(Boolean).join(' ');
+  return `<div class="${cls}" id="${o.id}">${o.tag || o.hard ? `<span class="ex-head">${o.tag ? `<span class="ex-tag">${tx(o.tag)}</span>` : ''}${o.hard ? '<span class="ex-lvl">Difícil</span>' : ''}</span>` : ''}${o.task ? `<p class="ex-task">${tx(o.task)}</p>` : ''}${o.q ? `<div class="ex-q">${fit(o.q)}</div>` : ''}${o.qfig ? o.qfig : ''}<ol class="ex-steps" aria-live="polite">${steps}</ol><div class="ex-res" hidden><span class="ex-res-t">Resultado</span>${res}</div>${o.note ? `<p class="ex-note" hidden>${tx(o.note)}</p>` : ''}<div class="ex-ctl"><button type="button" class="b-next">Ver paso 1 de ${n}</button><button type="button" class="b-all">Ver solución completa</button></div></div>`;
 }
 
 export const grid = (exs, one = false) => `<div class="grid${one ? ' one' : ''}">${exs.join('')}</div>`;
