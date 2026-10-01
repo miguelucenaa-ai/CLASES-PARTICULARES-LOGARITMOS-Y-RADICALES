@@ -71,6 +71,13 @@ const gen = {
   id: 'rea-gen', jump: 'Fracción generatriz', h: 'Fracción generatriz', kind: 'intro',
   body: [
     p(r`La **fracción generatriz** es la fracción que da origen a un decimal. Todo decimal exacto o periódico tiene una, y por eso es un número racional.`),
+    sub('Las reglas de tus apuntes (la forma rápida)'),
+    cards([
+      { t: 'Exacto', p: r`**Arriba:** el número sin coma. **Abajo:** un 1 y tantos ceros como cifras decimales.`, m: r`24{,}2=\dfrac{242}{10}=\dfrac{121}{5}` },
+      { t: 'Periódico puro', p: r`**Arriba:** (el número hasta el final del primer período) menos (la parte entera). **Abajo:** tantos 9 como cifras tiene el período.`, m: r`9{,}\overline{18}=\dfrac{918-9}{99}=\dfrac{101}{11}` },
+      { t: 'Periódico mixto', p: r`**Arriba:** (el número hasta el final del primer período) menos (el número hasta el final del anteperíodo). **Abajo:** tantos 9 como cifras del período, seguidos de tantos 0 como cifras del anteperíodo.`, m: r`2{,}39\overline{3}=\dfrac{2393-239}{900}=\dfrac{359}{150}` },
+    ], 'three'),
+    p(r`Con la regla lo haces en una línea. Los ejemplos de abajo te enseñan **por qué funciona** (multiplicar y restar), que te sirve si se te olvida la regla.`, 'muted'),
     sub('1. Decimal exacto'),
     recipe('Receta: decimal exacto', [
       r`**Numerador:** las cifras del número, **sin la coma**.`,

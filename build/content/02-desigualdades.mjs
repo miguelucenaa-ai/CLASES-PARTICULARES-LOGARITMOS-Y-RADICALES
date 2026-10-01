@@ -120,9 +120,54 @@ const err = {
   ],
 };
 
+const practica = {
+  id: 'des-prac', jump: 'Practica', h: 'Practica: inecuaciones y orden', kind: 'exercises',
+  body: [
+    p(r`Resuelve cada inecuación **tú primero**. Recuerda la regla de oro: al dividir o multiplicar por un **negativo**, el símbolo se da la vuelta.`, 'intro'),
+    grid([
+      ex({ id: 'des-q1', tag: 'Resuelve', q: r`3x-5\le10`,
+        steps: [
+          { t: r`Sumo 5 a los dos lados.`, m: r`3x\le15` },
+          { t: r`Divido entre $3$ (positivo): el sentido no cambia.`, m: r`x\le5` },
+          { t: r`Intervalo, con el $5$ incluido.`, m: r`x\in(-\infty,\,5]`, fig: figure(numline({ from: 0, to: 8, segs: [{ a: -Infinity, b: 5, bc: true }], aria: 'x menor o igual que 5' })) },
+        ], resTxt: r`$x\in(-\infty,5]$` }),
+      ex({ id: 'des-q2', tag: 'Resuelve (negativo)', q: r`-2x+3<9`,
+        steps: [
+          { t: r`Resto 3 a los dos lados.`, m: r`-2x<6` },
+          { t: r`Divido entre $-2$ (**negativo**): el sentido **se invierte**.`, m: r`x>\dfrac{6}{-2}=-3` },
+          { t: r`Intervalo, sin incluir el $-3$.`, m: r`x\in(-3,\,+\infty)`, fig: figure(numline({ from: -6, to: 3, segs: [{ a: -3, b: Infinity, ac: false }], aria: 'x mayor que -3' })) },
+        ], resTxt: r`$x\in(-3,+\infty)$` }),
+      ex({ id: 'des-q3', tag: 'Con paréntesis', q: r`4(x-1)\ge2x+6`,
+        steps: [
+          { t: r`Quito el paréntesis (propiedad distributiva).`, m: r`4x-4\ge2x+6` },
+          { t: r`Paso las $x$ a un lado y los números al otro: resto $2x$ y sumo $4$.`, m: r`4x-2x\ge6+4\ \Rightarrow\ 2x\ge10` },
+          { t: r`Divido entre $2$ (positivo).`, m: r`x\ge5` },
+          { t: r`Intervalo.`, m: r`x\in[5,\,+\infty)`, fig: figure(numline({ from: 2, to: 9, segs: [{ a: 5, b: Infinity, ac: true }], aria: 'x mayor o igual que 5' })) },
+        ], resTxt: r`$x\in[5,+\infty)$` }),
+      ex({ id: 'des-q4', tag: 'Doble desigualdad', q: r`-3<2x-1<5`,
+        steps: [
+          { t: r`Sumo 1 en las tres partes.`, m: r`-2<2x<6` },
+          { t: r`Divido las tres partes entre $2$.`, m: r`-1<x<3` },
+          { t: r`Intervalo abierto.`, m: r`x\in(-1,\,3)`, fig: figure(numline({ from: -3, to: 5, segs: [{ a: -1, b: 3, ac: false, bc: false }], aria: 'Entre -1 y 3' })) },
+        ], resTxt: r`$x\in(-1,3)$` }),
+      ex({ id: 'des-q5', tag: 'Con fracción', q: r`\dfrac{x+2}{3}>1`,
+        steps: [
+          { t: r`Multiplico por $3$ (positivo): el sentido no cambia.`, m: r`x+2>3` },
+          { t: r`Resto 2.`, m: r`x>1` },
+          { t: r`Intervalo.`, m: r`x\in(1,\,+\infty)`, fig: figure(numline({ from: -1, to: 6, segs: [{ a: 1, b: Infinity, ac: false }], aria: 'x mayor que 1' })) },
+        ], resTxt: r`$x\in(1,+\infty)$` }),
+      ex({ id: 'des-q6', tag: 'Ordena', task: r`Ordena de menor a mayor: $\dfrac56,\ \dfrac45,\ \dfrac79$.`,
+        steps: [
+          { t: r`Denominador común: $\text{mcm}(6,5,9)=90$.`, m: r`\dfrac56=\dfrac{75}{90}\qquad\dfrac45=\dfrac{72}{90}\qquad\dfrac79=\dfrac{70}{90}` },
+          { t: r`Con el mismo denominador, es menor el de menor numerador.`, m: r`70<72<75` },
+        ], res: r`\dfrac79<\dfrac45<\dfrac56` }),
+    ]),
+  ],
+};
+
 export default {
   id: 'desigualdades', num: 2, cls: 'p2', tab: 'Desigualdades', title: '2. Ordenación de números reales. Desigualdades',
   lead: 'Cómo comparar números y cómo se comportan las desigualdades al operar.',
   color: ['#6d3fd3', '#f0eafd', '#d6c8f4'],
-  sections: [ord, prop, ordej, err],
+  sections: [ord, prop, ordej, practica, err],
 };

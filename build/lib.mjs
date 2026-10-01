@@ -5,16 +5,16 @@ const require = createRequire(import.meta.url);
 const temml = require('temml');
 
 // Colores para resaltar lo que cambia en cada paso: \hl (rojo), \hb (azul), \hg (verde), \ho (naranja)
+// Se usan clases CSS (en vez de colores fijos) para que también funcionen en el modo pizarra.
 const macros = {
-  '\\hl': '\\textcolor{##c0283f}{#1}',
-  '\\hb': '\\textcolor{##2451c7}{#1}',
-  '\\hg': '\\textcolor{##17773b}{#1}',
-  '\\ho': '\\textcolor{##b45309}{#1}',
-  '\\tachado': '\\textcolor{##8a93a6}{\\cancel{#1}}',
+  '\\hl': '\\class{hl}{#1}',
+  '\\hb': '\\class{hb}{#1}',
+  '\\hg': '\\class{hg}{#1}',
+  '\\ho': '\\class{ho}{#1}',
 };
 
 export function mathml(tex, display = false) {
-  return temml.renderToString(tex, { displayMode: display, throwOnError: true, macros: { ...macros }, strict: false, trust: false });
+  return temml.renderToString(tex, { displayMode: display, throwOnError: true, macros: { ...macros }, strict: false, trust: (ctx) => ctx.command === '\\class' });
 }
 
 // texto con $mates$ y **negrita** y __cursiva__
@@ -94,9 +94,11 @@ export function section(o) {
 }
 
 // Una pestaña = un apartado del PDF. Las secciones nuevas (o) o ya hechas ({raw, id, jump}).
-export function buildPanel(P) {
+export function buildPanel(P, prev, next) {
   const secs = P.sections.map(s => (s.raw ? s.raw : section(s)));
-  return `<div class="panel ${P.cls}" role="tabpanel" id="panel-${P.id}" aria-labelledby="tab-${P.id}" hidden><div class="panel-head"><span class="panel-num">${P.num}</span><div><h2 class="panel-title">${P.title.replace(/^\d+\.\s*/, "")}</h2>${P.lead ? `<p class="panel-lead">${tx(P.lead)}</p>` : ''}</div></div>${secs.join('\n')}</div>`;
+  const nm = (Q) => Q.title.replace(/^\d+\.\s*/, '');
+  const pager = `<nav class="pager" aria-label="Cambiar de apartado">${prev ? `<button type="button" class="pg pg-prev" data-go="prev" style="--hue:${prev.color[0]}"><small>← Anterior</small><strong><i>${prev.num}</i> ${nm(prev)}</strong></button>` : ''}${next ? `<button type="button" class="pg pg-next${prev ? '' : ' pg-only'}" data-go="next" style="--hue:${next.color[0]}"><small>Siguiente →</small><strong><i>${next.num}</i> ${nm(next)}</strong></button>` : ''}</nav>`;
+  return `<div class="panel ${P.cls}" role="tabpanel" id="panel-${P.id}" aria-labelledby="tab-${P.id}" style="--hue:${P.color[0]}" hidden><div class="panel-head"><span class="panel-num">${P.num}</span><div><h2 class="panel-title">${P.title.replace(/^\d+\.\s*/, "")}</h2>${P.lead ? `<p class="panel-lead">${tx(P.lead)}</p>` : ''}</div></div>${secs.join('\n')}${pager}</div>`;
 }
 
 // Secciones ya hechas (extraídas del HTML anterior)

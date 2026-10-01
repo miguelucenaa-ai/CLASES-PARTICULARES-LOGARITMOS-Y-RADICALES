@@ -144,3 +144,19 @@ export function encajados() {
   });
   return `<svg class="nl" viewBox="0 0 ${W} ${H}" role="img" aria-label="Intervalos encajados que aproximan la raíz cúbica de 2">${g}<text class="lbl-2" x="${pad}" y="${H - 8}" font-size="15">● ∛2 = 1,2599…</text></svg>`;
 }
+
+/* Recta de la portada: ℤ (azul), ℚ (verde azulado) e 𝕀 (rojo) sobre la recta real. Se dibuja sola al cargar. */
+export function heroLine() {
+  const W = 560, H = 128, y = 88, x0 = 46, u = 78;
+  const X = (v) => x0 + (v + 2) * u;
+  const pts = [
+    { v: -1.5, t: '−3/2', k: 'q' }, { v: -1, t: '−1', k: 'z' }, { v: 0, t: '0', k: 'z' }, { v: 0.5, t: '1/2', k: 'q' },
+    { v: Math.SQRT2, t: '√2', k: 'i' }, { v: 2, t: '2', k: 'z' }, { v: Math.E, t: 'e', k: 'i' }, { v: Math.PI, t: 'π', k: 'i' },
+  ];
+  let g = `<path class="hl-ax" pathLength="1" d="M18,${y} H${W - 14}"/><path class="hl-ax" pathLength="1" d="M${W - 14},${y} l-12,-7 M${W - 14},${y} l-12,7"/>`;
+  for (let v = -2; v <= 4; v++) g += `<line class="hl-tk" x1="${f2(X(v))}" y1="${y - 8}" x2="${f2(X(v))}" y2="${y + 8}"/>`;
+  pts.forEach((p, i) => {
+    g += `<g class="hp hp-${p.k}" style="--i:${i}"><circle cx="${f2(X(p.v))}" cy="${y}" r="9"/><text x="${f2(X(p.v))}" y="${y - 22}">${p.t}</text></g>`;
+  });
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="La recta real con números enteros, racionales e irracionales marcados">${g}</svg>`;
+}

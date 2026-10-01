@@ -133,9 +133,43 @@ const enc = {
   ],
 };
 
+const prac = {
+  id: 'rec-prac', jump: 'Practica', h: 'Practica: ubica en la recta', kind: 'exercises',
+  body: [
+    p(r`Intenta dibujar cada número antes de abrir los pasos.`, 'intro'),
+    grid([
+      ex({ id: 'rec-q1', tag: 'Fracción', task: r`Representa $\dfrac74$.`, chk: ['Rational(7,4)', 'Rational(7,4)'],
+        steps: [
+          { t: r`$7\div4=1$ y sobran $3$: $\dfrac74=1+\dfrac34=1{,}75$. Está entre el $1$ y el $2$.`, m: r`\dfrac74=1+\dfrac34` },
+          { t: r`Divido el tramo de 1 a 2 en 4 partes (cada una $\frac14$) y cuento 3 desde el 1.`, fig: figure(numline({ from: 0, to: 3, ticks: [0, 1, 2, 3, 1.25, 1.5, 1.75], labels: { 1.25: '', 1.5: '', 1.75: '' }, pts: [{ x: 1.75, label: '7/4', c: 2 }], segs: [{ a: 1, b: 1.75, ac: true, bc: true }], aria: '7/4' })) },
+        ], resTxt: r`$\frac74=1{,}75$.` }),
+      ex({ id: 'rec-q2', tag: 'Fracción negativa', task: r`Representa $-\dfrac53$.`,
+        steps: [
+          { t: r`$5\div3=1$ y sobran $2$: $-\dfrac53=-1-\dfrac23\approx-1{,}67$. Está entre $-2$ y $-1$.`, m: r`-\dfrac53=-\left(1+\dfrac23\right)` },
+          { t: r`Divido el tramo de $-1$ a $-2$ en 3 partes (cada una $\frac13$) y cuento 2 desde el $-1$ hacia la izquierda.`, fig: figure(numline({ from: -3, to: 1, ticks: [-3, -2, -1, 0, 1, -4 / 3, -5 / 3], labels: { [-4 / 3]: '', [-5 / 3]: '' }, pts: [{ x: -5 / 3, label: '−5/3', c: 2 }], segs: [{ a: -5 / 3, b: -1, ac: true, bc: true }], aria: '-5/3' })) },
+        ], resTxt: r`$-\frac53\approx-1{,}67$.` }),
+      ex({ id: 'rec-q3', tag: 'Raíz', task: r`Representa $\sqrt{10}$.`,
+        steps: [
+          { t: r`$10=9+1=3^2+1^2$: catetos $3$ y $1$.`, m: r`10=3^2+1^2` },
+          { t: r`Cateto de 3 sobre la recta, perpendicular de 1 y hipotenusa $\sqrt{10}$. La bajo con el compás.`, fig: figure(pitagoras({ a: 3, b: 1, stage: 4 })) },
+        ], resTxt: r`$\sqrt{10}\approx3{,}162$.` }),
+      ex({ id: 'rec-q4', tag: 'Raíz', task: r`Representa $\sqrt{13}$.`,
+        steps: [
+          { t: r`$13=9+4=3^2+2^2$: catetos $3$ y $2$.`, m: r`13=3^2+2^2` },
+          { t: r`Cateto de 3 sobre la recta, perpendicular de 2 y hipotenusa $\sqrt{13}$. La bajo con el compás.`, fig: figure(pitagoras({ a: 3, b: 2, stage: 4 })) },
+        ], resTxt: r`$\sqrt{13}\approx3{,}606$.` }),
+      ex({ id: 'rec-q5', tag: '¿Entre qué enteros?', task: r`¿Entre qué dos enteros está $\sqrt{20}$?`, chk: ['sqrt(20)', '2*sqrt(5)'],
+        steps: [
+          { t: r`Busco los cuadrados perfectos más cercanos a $20$.`, m: r`16<20<25` },
+          { t: r`Aplico la raíz cuadrada (conserva el orden).`, m: r`\sqrt{16}<\sqrt{20}<\sqrt{25}\ \Rightarrow\ 4<\sqrt{20}<5` },
+        ], resTxt: r`$\sqrt{20}$ está entre el $4$ y el $5$ ($\approx4{,}47$).` }),
+    ]),
+  ],
+};
+
 export default {
   id: 'recta', num: 3, cls: 'p3', tab: 'La recta real', title: '3. La recta real. Representación gráfica',
   lead: 'Cómo colocar enteros, fracciones e irracionales en la recta.',
   color: ['#0b6b4f', '#e2f4ed', '#b2dccb'],
-  sections: [idea, ent, rac, irr, enc],
+  sections: [idea, ent, rac, irr, enc, prac],
 };
