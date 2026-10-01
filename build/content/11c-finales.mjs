@@ -112,7 +112,7 @@ export const sint = {
     sub('24. Triángulo equilátero de lado 10 cm'),
     grid([
       ex({ id: 'fin-24', tag: 'Ejercicio 24', task: r`Calcula el área de un triángulo equilátero de lado $10$ cm con un error menor que una milésima.`,
-        qfig: figure(triSvg, r`La altura $h$ divide el triángulo en dos triángulos rectángulos de hipotenusa $10$ y cateto $5$.`),
+        qfig: figure(triSvg, r`Triángulo equilátero de lado $10$ cm. La línea de puntos es la altura $h$.`),
         chk: ['Rational(1,2)*10*sqrt(10**2-5**2)', '25*sqrt(3)'],
         steps: [
           { t: r`La altura cae en el punto medio de la base: el triángulo rectángulo tiene hipotenusa $10$ y cateto $5$. Por Pitágoras:`, m: r`h=\sqrt{10^2-5^2}=\sqrt{75}=5\sqrt3` },

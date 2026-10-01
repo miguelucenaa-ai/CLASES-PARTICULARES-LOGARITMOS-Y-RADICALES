@@ -152,8 +152,21 @@
         refresh();
       });
     }
+    /* Modo "intentarlo primero": en los ejercicios (no en los ejemplos) se avisa, y la etiqueta que
+       nombra el método ("Racionaliza", "Factor común"...) no se ve hasta pedir el primer paso. */
+    var tryHint = null;
+    if (!ex.classList.contains('example')) {
+      tryHint = document.createElement('p');
+      tryHint.className = 'try-hint';
+      tryHint.textContent = 'Inténtalo tú primero. Si te atascas, pide solo un paso.';
+      ctl.parentNode.insertBefore(tryHint, ctl);
+      var tg = ex.querySelector('.ex-tag');
+      if (tg && !/^(Fácil|Medio|Difícil|Ejercicio|Pág|\d)/.test(tg.textContent.trim())) tg.classList.add('ex-hint');
+    }
     function paint() {
       var fin = shown >= n;
+      ex.dataset.step = shown;
+      if (tryHint) tryHint.hidden = shown > 0;
       steps.forEach(function (li, i) { li.hidden = i >= shown; li.classList.toggle('cur', !fin && i === shown - 1 && n > 1); });
       ex.classList.toggle('going', shown > 0 && !fin);
       prev.hidden = shown === 0;
@@ -161,7 +174,8 @@
       ex.classList.toggle('done', fin);
       next.textContent = fin ? 'Ocultar' : (n === 1 ? 'Ver la solución' : 'Ver paso ' + (shown + 1) + ' de ' + n);
       next.setAttribute('aria-expanded', shown > 0 ? 'true' : 'false');
-      all.hidden = fin || n === 1 || shown === n - 1;
+      /* "Ver solución completa" solo aparece cuando ya has pedido al menos un paso */
+      all.hidden = fin || n === 1 || shown === 0 || shown === n - 1;
       fit(ex);
     }
     prev.addEventListener('click', function () { if (shown > 0) { shown--; paint(); } });

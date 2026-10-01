@@ -364,3 +364,8 @@ main{padding-top:4px}
 .ex-lvl::before{content:'★'; font-size:.8em}
 .ex.hard{border-color:color-mix(in srgb, var(--ink) 40%, var(--line-2)); box-shadow:0 3px 0 color-mix(in srgb, var(--ink) 22%, var(--line))}
 .blk-hard::before{background:linear-gradient(var(--acc), var(--ink))}
+
+/* Intentarlo primero */
+.try-hint{margin:14px 0 -2px; font:600 1.18rem/1.25 var(--f-hand); color:var(--ink-2)}
+.try-hint::before{content:'✏️ '; font-size:.9em}
+.ex[data-step="0"] .ex-tag.ex-hint{display:none}

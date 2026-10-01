@@ -20,9 +20,9 @@ const def = {
       ex({ id: 'abs-d1', example: true, tag: 'Ejemplo', task: r`Calcula la distancia entre $-2$ y $5$.`, chk: ['Abs(5-(-2))', '7'],
         steps: [
           { t: r`Aplico la fórmula $d(a,b)=|b-a|$ con $a=-2$ y $b=5$.`, m: r`d(-2,5)=|5-(-2)|` },
-          { t: r`Cuidado con el doble signo: restar un negativo es sumar.`, m: r`|5+2|=|7|=7` },
-        ], resTxt: r`La distancia es $7$ unidades.`,
-        qfig: figure(numline({ from: -3, to: 6, segs: [{ a: -2, b: 5, ac: true, bc: true }], aria: 'Distancia entre -2 y 5' })) }),
+          { t: r`Cuidado con el doble signo: restar un negativo es sumar.`, m: r`|5+2|=|7|=7`,
+            fig: figure(numline({ from: -3, to: 6, segs: [{ a: -2, b: 5, ac: true, bc: true }], aria: 'Distancia entre -2 y 5' })) },
+        ], resTxt: r`La distancia es $7$ unidades.` }),
     ]),
   ],
 };
@@ -136,8 +136,9 @@ const ec = {
     ]),
     grid([
       ex({ id: 'abs-e1', example: true, tag: 'Ejemplo del colegio', task: r`Resuelve $|x|=1$.`,
-        steps: [{ t: r`Los números a distancia 1 del cero son dos: $1$ y $-1$.`, m: r`x=1\quad\text{o}\quad x=-1` }],
-        resTxt: r`$x=-1$ o $x=1$.`, qfig: figure(numline({ from: -3, to: 3, pts: [{ x: -1, label: '−1' }, { x: 1, label: '1' }], aria: '|x| = 1' })) }),
+        steps: [{ t: r`Los números a distancia 1 del cero son dos: $1$ y $-1$.`, m: r`x=1\quad\text{o}\quad x=-1`,
+          fig: figure(numline({ from: -3, to: 3, pts: [{ x: -1, label: '−1' }, { x: 1, label: '1' }], aria: '|x| = 1' })) }],
+        resTxt: r`$x=-1$ o $x=1$.` }),
       ex({ id: 'abs-e2', example: true, tag: 'Ejemplo del colegio', task: r`Resuelve $|x|<2$.`,
         steps: [
           { t: r`Distancia menor que 2: $x$ está **entre** $-2$ y $2$.`, m: r`-2<x<2` },
@@ -151,8 +152,9 @@ const ec = {
       ex({ id: 'abs-e4', example: true, tag: 'Con un desplazamiento', task: r`Resuelve $|x-3|=2$.`,
         steps: [
           { t: r`Lo de dentro puede valer $2$ o $-2$.`, m: r`x-3=2\quad\text{o}\quad x-3=-2` },
-          { t: r`Despejo $x$ en cada caso (sumo 3).`, m: r`x=5\quad\text{o}\quad x=1` },
-        ], resTxt: r`$x=1$ o $x=5$ (están a distancia 2 del 3).`, qfig: figure(numline({ from: -1, to: 7, pts: [{ x: 3, label: '3', c: 2 }, { x: 1, label: '1' }, { x: 5, label: '5' }], aria: '|x-3| = 2' })) }),
+          { t: r`Despejo $x$ en cada caso (sumo 3).`, m: r`x=5\quad\text{o}\quad x=1`,
+            fig: figure(numline({ from: -1, to: 7, pts: [{ x: 3, label: '3', c: 2 }, { x: 1, label: '1' }, { x: 5, label: '5' }], aria: '|x-3| = 2' })) },
+        ], resTxt: r`$x=1$ o $x=5$ (están a distancia 2 del 3).` }),
       ex({ id: 'abs-e5', example: true, tag: 'Con un desplazamiento', task: r`Resuelve $|2x-1|\ge3$.`,
         steps: [
           { t: r`"Mayor o igual": dos casos.`, m: r`2x-1\ge3\quad\text{o}\quad 2x-1\le-3` },
