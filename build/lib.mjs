@@ -77,7 +77,13 @@ export const figure = (svg, cap) => `<figure class="fig">${svg}${cap ? `<figcapt
    - fig : svg opcional que se muestra en ese paso
 */
 export const checks = [];
+export const registry = {}; // id -> HTML del ejercicio (permite colocar un mismo ejercicio en el apartado que toque)
 export function ex(o) {
+  const html = exHTML(o);
+  registry[o.id] = html;
+  return html;
+}
+function exHTML(o) {
   const n = o.steps.length;
   if (o.chk) checks.push({ id: o.id, chk: o.chk });
   const steps = o.steps.map(s => `<li hidden><p>${tx(s.t)}</p>${s.why ? `<p class="st-why">${tx(s.why)}</p>` : ''}${s.m ? `<div class="m">${lines(s.m)}</div>` : ''}${s.fig ? s.fig : ''}</li>`).join('');

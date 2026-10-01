@@ -1,10 +1,8 @@
-import { reales, abs } from './11a-finales.mjs';
-import { pot, log } from './11b-finales.mjs';
-import { sint, teo } from './11c-finales.mjs';
+import { mezclados } from './colegio.mjs';
 
 export default {
   id: 'finales', num: 11, cls: 'p11', tab: 'Ejercicios finales', title: 'Ejercicios finales',
-  lead: 'Los 26 ejercicios del final del tema, resueltos paso a paso y en el mismo orden que en tu PDF.',
+  lead: 'Los ejercicios del PDF que mezclan varios apartados grandes. El resto está en su apartado, al final de cada uno.',
   color: ['#334155', '#e8edf3', '#c3cedb'],
-  sections: [reales, abs, pot, log, sint, teo],
+  sections: mezclados,
 };
