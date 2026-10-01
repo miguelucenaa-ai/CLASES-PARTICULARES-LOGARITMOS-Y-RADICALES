@@ -1,0 +1,180 @@
+
+/* Layout: una columna de lectura (máx. 980 px) con pestañas fijas arriba; tarjetas blancas sobre gris frío; cada tema con su color. */
+:root{
+  --bg:#e6f9f5; --card:#ffffff; --card-2:#f0fbf9; --line:#d0efe9; --line-2:#b2e1d7;
+  --ink:#172033; --ink-2:#465267; --ink-3:#6a7589;
+  --rac:#2451c7; --rac-soft:#e9eefc; --rac-line:#c4d1f4;
+  --log:#9a4f07; --log-soft:#fdf1e2; --log-line:#efd0a8;
+  --c1:#2451c7; --c1-soft:#e9eefc; --c2:#6a3fd3; --c2-soft:#f0eafd; --c3:#b8304d; --c3-soft:#fce9ed;
+  --ok:#17773b; --ok-soft:#e3f4e8; --ok-line:#b5dfc2;
+  --bad:#b3322a; --bad-soft:#fdecea;
+  --key-soft:#fff6d9; --key-line:#f0dc9a;
+  --acc:var(--rac); --acc-soft:var(--rac-soft); --acc-line:var(--rac-line);
+  --shadow:0 1px 2px rgba(23,32,51,.05), 0 6px 18px -10px rgba(23,32,51,.18);
+  --f-body:'Atkinson Hyperlegible Next','Atkinson Hyperlegible','Segoe UI',system-ui,-apple-system,sans-serif;
+  --f-head:'Bricolage Grotesque','Avenir Next','Segoe UI',system-ui,sans-serif;
+  --f-math:'Cambria Math','STIX Two Math','STIXTwoMath-Regular','Noto Sans Math','Latin Modern Math',math;
+}
+
+
+body[data-tab="logaritmos"], .panel.log{--acc:var(--log); --acc-soft:var(--log-soft); --acc-line:var(--log-line)}
+.panel.rac{--acc:var(--rac); --acc-soft:var(--rac-soft); --acc-line:var(--rac-line)}
+
+[hidden]{display:none !important}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%; scroll-padding-top:120px}
+body{margin:0; background:var(--bg); color:var(--ink); font:400 17px/1.6 var(--f-body)}
+h1,h2,h3{font-family:var(--f-head); line-height:1.15; letter-spacing:-.01em; margin:0; text-wrap:balance}
+p{margin:0}
+b{font-weight:700}
+button{font:inherit; color:inherit; cursor:pointer}
+:focus-visible{outline:3px solid var(--acc); outline-offset:2px; border-radius:8px}
+.muted{color:var(--ink-2)} .small{font-size:.86rem} .center{text-align:center}
+
+/* Fórmulas (MathML, sin conexión) */
+math{font-family:var(--f-math); font-size:1.1em; font-style:normal; font-weight:normal; line-height:normal; letter-spacing:normal; direction:ltr}
+math.tml-display{display:block math}
+mfrac > :nth-child(2), msqrt, mover > :first-child{math-shift:compact}
+.fit{max-width:100%; min-width:0}
+.fw, .fn{overflow-x:auto; overflow-y:hidden; max-width:100%}
+.fit .fn{display:none}
+.fit.split .fw{display:none}
+.fit.split .fn{display:block}
+.fn math.tml-display + math.tml-display{margin-top:.2em}
+math.tml-display{margin:0}
+.res-txt{font-weight:700; padding:2px 0; line-height:1.5}
+.err{color:var(--bad)}
+
+/* Página */
+.page{max-width:980px; margin:0 auto; padding-inline:clamp(16px, 4vw, 28px); padding-block:28px 56px}
+.top{padding-bottom:18px}
+.eyebrow{display:block; font-size:.74rem; font-weight:800; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3)}
+.top h1{font-size:clamp(2rem, 4.6vw, 2.8rem); font-weight:800; margin-top:6px}
+.top .sub{margin-top:10px; color:var(--ink-2); max-width:62ch; font-size:1.05rem}
+
+/* Barra fija: pestañas + saltos */
+.bar{position:sticky; top:env(safe-area-inset-top,0px); z-index:20; margin-inline:calc(-1 * clamp(16px, 4vw, 28px)); padding:10px clamp(16px, 4vw, 28px) 10px;
+  background:color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border-bottom:1px solid var(--line)}
+.tabs{display:inline-flex; background:var(--card); border:1px solid var(--line-2); border-radius:14px; padding:4px; gap:4px; max-width:100%}
+.tab{border:0; background:transparent; border-radius:10px; padding:8px 18px; font-weight:800; font-size:1rem; min-height:42px; color:var(--ink-2)}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"].rac{background:var(--rac); color:var(--card)}
+.tab[aria-selected="true"].log{background:var(--log); color:var(--card)}
+.jump{display:flex; gap:6px; overflow-x:auto; margin-top:10px; padding-bottom:2px; scrollbar-width:none}
+.jump::-webkit-scrollbar{display:none}
+@media (min-width: 761px){ .jump{flex-wrap:wrap; overflow:visible} }
+.jump button{flex:none; border:1px solid var(--line-2); background:var(--card); border-radius:999px; padding:5px 12px; font-size:.84rem; font-weight:700; color:var(--ink-2); min-height:34px; white-space:nowrap}
+.jump button:hover{border-color:var(--acc); color:var(--acc)}
+
+/* Bloques */
+main{padding-top:6px}
+.blk{background:var(--card); border:1px solid var(--line); border-radius:18px; padding:22px 22px 24px; margin-top:22px; box-shadow:var(--shadow); scroll-margin-top:130px}
+.blk > * + *{margin-top:14px}
+.blk h2{font-size:1.5rem; font-weight:800}
+.blk .sub{font-size:1.1rem; font-weight:800; margin-top:24px; color:var(--ink)}
+.blk p{max-width:70ch}
+.intro, .outro{color:var(--ink-2)}
+.outro{font-size:.95rem}
+.why{color:var(--ink-2)}
+.tipline{background:var(--card-2); border:1px solid var(--line); border-radius:12px; padding:10px 14px}
+.key{background:var(--key-soft); border:1px solid var(--key-line); border-radius:12px; padding:12px 16px; line-height:1.6}
+.formula{background:var(--acc-soft); border:1px solid var(--acc-line); border-radius:12px; padding:8px 12px; text-align:center}
+.formula.big math{font-size:1.3em}
+.two{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.four{display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:10px}
+.mini-card{background:var(--card-2); border:1px solid var(--line); border-radius:12px; padding:12px 14px; min-width:0; overflow-x:auto}
+.mini-card p{margin-top:4px}
+.four .mini-card{text-align:center}
+.mc-t{display:block; font-size:.74rem; font-weight:800; letter-spacing:.07em; text-transform:uppercase; color:var(--acc)}
+
+/* Tabla de los tres casos */
+.tbl{overflow-x:auto; border:1px solid var(--line); border-radius:12px}
+.tbl table{border-collapse:collapse; width:100%; min-width:520px}
+.tbl th{font-size:.74rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-3); text-align:left; padding:10px 12px; background:var(--card-2); border-bottom:1px solid var(--line)}
+.tbl td{padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:middle}
+.tbl tr:last-child td{border-bottom:0}
+.case-dot{display:inline-grid; place-items:center; width:24px; height:24px; border-radius:7px; font-size:.8rem; font-weight:800; margin-right:10px; vertical-align:middle}
+.case-dot.c1, .case-badge.cc1{background:var(--c1-soft); color:var(--c1)}
+.case-dot.c2, .case-badge.cc2{background:var(--c2-soft); color:var(--c2)}
+.case-dot.c3, .case-badge.cc3{background:var(--c3-soft); color:var(--c3)}
+.case-h{display:flex; gap:12px; align-items:center; flex-wrap:wrap}
+.case-badge{font-weight:800; font-size:.86rem; border-radius:8px; padding:4px 10px}
+
+/* Ejercicio / ejemplo paso a paso */
+.grid{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:14px; align-items:start}
+.grid.one{grid-template-columns:minmax(0,1fr)}
+.ex{background:var(--card); border:1px solid var(--line-2); border-radius:14px; padding:14px 16px 16px; min-width:0; position:relative}
+.ex.example{background:var(--acc-soft); border-color:var(--acc-line); padding:16px 18px 18px}
+.ex.check{background:var(--card-2); border-color:var(--line)}
+.ex.done{border-color:var(--ok-line)}
+.ex-tag{display:inline-block; font-size:.74rem; font-weight:800; letter-spacing:.04em; color:var(--acc); background:var(--acc-soft); border:1px solid var(--acc-line); border-radius:6px; padding:1px 8px}
+.ex.example .ex-tag{background:var(--card)}
+.ex-task{margin-top:6px; color:var(--ink-2); font-weight:600}
+.ex-q{text-align:center; padding:6px 0}
+.ex-q math{font-size:1.3em}
+.ex.check .ex-q math{font-size:1.12em}
+.ex-steps{list-style:none; margin:0; padding:0; counter-reset:s; display:flex; flex-direction:column; gap:10px}
+.ex-steps > li{counter-increment:s; position:relative; padding-left:34px; min-width:0}
+.ex-steps > li::before{content:counter(s); position:absolute; left:0; top:1px; width:24px; height:24px; border-radius:50%; background:var(--acc); color:var(--card); font-size:.78rem; font-weight:800; display:grid; place-items:center}
+.ex-steps > li p{color:var(--ink-2); font-size:.96rem}
+.ex-steps > li .m{margin-top:4px; text-align:left}
+.ex-steps > li.in{animation:rise .32s ease both}
+.ex-res{margin-top:12px; background:var(--ok-soft); border:1px solid var(--ok-line); border-radius:12px; padding:8px 12px; text-align:center}
+.ex-res-t{display:block; font-size:.72rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--ok)}
+.ex-res math{font-size:1.15em}
+.ex-note{margin-top:10px; font-size:.92rem; color:var(--ink-2); border-left:3px solid var(--line-2); padding-left:10px}
+.ex-ctl{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px}
+.ex-ctl button{border:1px solid var(--line-2); background:var(--card); border-radius:10px; padding:7px 14px; font-weight:700; font-size:.9rem; min-height:40px}
+.ex-ctl .b-next{background:var(--acc); border-color:var(--acc); color:var(--card)}
+.ex-ctl .b-next:hover{filter:brightness(1.08)}
+.ex-ctl .b-all:hover{border-color:var(--acc); color:var(--acc)}
+.ex.done .ex-ctl .b-next{background:var(--card); color:var(--ink-2); border-color:var(--line-2)}
+.ex.example .ex-steps{margin-top:6px}
+
+/* Propiedades */
+.props{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:14px; align-items:start}
+.prop{border:1px solid var(--line); border-radius:14px; padding:14px 16px 16px; min-width:0}
+.prop > * + *{margin-top:10px}
+.prop h3{font-size:1.1rem; font-weight:800}
+.prop .why{font-size:.94rem}
+
+/* Errores */
+.errs{list-style:none; margin:0; padding:0; display:grid; gap:10px}
+.errs li{position:relative; padding:10px 14px 10px 42px; background:var(--bad-soft); border-radius:12px; line-height:1.6; min-width:0}
+.errs li .m{margin-top:6px}
+.errs li::before{content:'✗'; position:absolute; left:16px; top:10px; color:var(--bad); font-weight:800}
+
+.foot{margin-top:34px; color:var(--ink-3); font-size:.84rem; text-align:center}
+
+@keyframes rise{from{opacity:0; transform:translateY(-4px)} to{opacity:1; transform:none}}
+@media (max-width: 760px){
+  .grid, .props{grid-template-columns:1fr}
+  .four{grid-template-columns:1fr 1fr}
+  .two{grid-template-columns:1fr}
+  .blk{padding:18px 14px 20px; border-radius:16px}
+  .ex{padding:12px 12px 14px}
+  .ex.example{padding:14px 12px 16px}
+  .prop{padding:12px}
+  .ex-steps > li{padding-left:30px}
+  .ex-q math{font-size:1.18em}
+  .ex-steps .m math, .errs .m math{font-size:1.04em}
+  .errs li{padding-left:36px} .errs li::before{left:13px}
+  body{font-size:16px}
+  .blk h2{font-size:1.3rem}
+  .tabs{display:flex; width:100%; padding:3px}
+  .tab{flex:1; padding:6px 10px; min-height:38px; font-size:.95rem}
+  .bar{padding-block:8px}
+  .jump{margin-top:8px}
+  .jump button{min-height:32px; padding:4px 11px; font-size:.8rem}
+  .top{padding-bottom:12px}
+}
+@media (max-width: 360px){
+  .blk{padding-inline:8px}
+  .ex, .ex.example, .prop{padding-inline:8px}
+  .ex-steps > li{padding-left:28px}
+  .ex-steps .m math, .errs .m math, .ex-res math{font-size:.9em}
+  .ex-q math{font-size:1.02em}
+}
+@media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important} }
+@media print{ .bar, .ex-ctl{display:none} .ex-steps > li[hidden], .ex-res[hidden], .ex-note[hidden]{display:block !important} .blk{box-shadow:none; break-inside:avoid} }
+

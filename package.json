@@ -1,0 +1,7 @@
+{
+  "name": "tema1-numeros-reales",
+  "private": true,
+  "type": "module",
+  "scripts": { "build": "node build/build.mjs" },
+  "dependencies": { "temml": "^0.10.0" }
+}

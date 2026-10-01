@@ -1,0 +1,99 @@
+/* ===== Ampliación: 11 apartados, pasos más claros, móvil / iPad ===== */
+
+/* Barra de apartados: una fila que se desliza en móvil, varias filas en pantallas grandes */
+.tabs{display:flex; flex-wrap:wrap; gap:4px; width:100%; padding:4px; border-radius:16px}
+.tab{display:inline-flex; align-items:center; gap:6px; padding:6px 12px; min-height:44px; font-size:.92rem; font-weight:700; white-space:nowrap; flex:0 0 auto}
+.tab .tn{display:inline-grid; place-items:center; min-width:22px; height:22px; padding:0 5px; border-radius:7px; background:var(--line); color:var(--ink-2); font-size:.78rem; font-weight:800}
+.tab[aria-selected="true"]{background:var(--tc); color:#fff}
+.tab[aria-selected="true"] .tn{background:rgba(255,255,255,.25); color:#fff}
+.tab:hover:not([aria-selected="true"]){background:var(--card-2)}
+@media (max-width: 900px){
+  .tabs{flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; scroll-snap-type:x proximity; overscroll-behavior-x:contain}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{scroll-snap-align:center; flex:0 0 auto; padding:6px 12px; min-height:44px; font-size:.9rem}
+}
+
+/* Cabecera de cada apartado */
+.panel-head{display:flex; gap:14px; align-items:center; margin-top:22px; padding:6px 4px 0}
+.panel-num{flex:none; display:grid; place-items:center; width:52px; height:52px; border-radius:16px; background:var(--acc); color:#fff; font:800 1.5rem/1 var(--f-head)}
+.panel-title{font-size:clamp(1.5rem,3.6vw,2.1rem); font-weight:800; color:var(--ink)}
+.panel-lead{margin-top:4px; color:var(--ink-2)}
+
+/* Pasos: el paso actual destaca, los anteriores se atenúan un poco */
+.ex-steps > li{transition:opacity .2s}
+.ex.going .ex-steps > li:not(.cur){opacity:.62}
+.ex-steps > li.cur{background:var(--acc-soft); border-radius:12px; margin-left:-8px; margin-right:-8px; padding:8px 8px 8px 42px; outline:2px solid var(--acc-line)}
+.ex-steps > li.cur::before{left:8px; top:9px}
+.ex.example .ex-steps > li.cur{background:var(--card)}
+.ex-steps > li > p:first-child{color:var(--ink); font-weight:600}
+.st-why{margin-top:4px; padding-left:22px; position:relative; color:var(--ink-2); font-size:.92rem !important; font-weight:400 !important}
+.st-why::before{content:'💡'; position:absolute; left:0; top:0; font-size:.85rem}
+.ex-ctl .b-prev{background:var(--card-2)}
+.ex-ctl button{min-height:44px}
+
+/* Receta */
+.recipe{background:var(--acc-soft); border:1px solid var(--acc-line); border-radius:14px; padding:12px 16px 14px}
+.recipe .rc-t{display:block; font-size:.74rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--acc); margin-bottom:6px}
+.recipe ol{margin:0; padding:0; list-style:none; counter-reset:r; display:grid; gap:8px}
+.recipe li{counter-increment:r; position:relative; padding-left:34px; min-width:0}
+.recipe li::before{content:counter(r); position:absolute; left:0; top:0; width:24px; height:24px; border-radius:50%; background:var(--acc); color:#fff; font-size:.78rem; font-weight:800; display:grid; place-items:center}
+
+/* Errores: línea de lo correcto */
+.okline{margin-top:6px; padding:6px 10px; background:var(--ok-soft); border:1px solid var(--ok-line); border-radius:10px; color:#0f4f27}
+.okline::before{content:'✓ '; font-weight:800; color:var(--ok)}
+.errs li .m math{font-size:1.05em}
+
+/* Figuras (recta real, intervalos, diagramas) */
+.fig{margin:0; padding:10px 4px 6px; border:1px solid var(--line); border-radius:14px; background:var(--card); overflow-x:auto; -webkit-overflow-scrolling:touch}
+.fig svg{display:block; width:100%; height:auto; min-width:0; max-width:640px; margin-inline:auto}
+.fig svg.venn{min-width:520px; max-width:720px}
+.fig figcaption{margin-top:6px; text-align:center; color:var(--ink-2); font-size:.9rem}
+.ex-steps .fig{margin-top:8px}
+.nl:where(:not(.venn)) text{font:600 20px var(--f-body); fill:var(--ink)}
+.venn text{font-family:var(--f-body)}
+.nl .ax{stroke:var(--ink-2); stroke-width:2}
+.nl .tk{stroke:var(--ink-2); stroke-width:1.5}
+.nl .seg{stroke:var(--acc); stroke-width:6; stroke-linecap:round}
+.nl .pt-c{fill:var(--acc); stroke:var(--acc); stroke-width:2}
+.nl .pt-o{fill:var(--card); stroke:var(--acc); stroke-width:3}
+.nl .seg2{stroke:var(--c3); stroke-width:6; stroke-linecap:round}
+.nl .pt2-c{fill:var(--c3); stroke:var(--c3); stroke-width:2}
+.nl .pt2-o{fill:var(--card); stroke:var(--c3); stroke-width:3}
+.nl .lbl-acc{fill:var(--acc); font-weight:800}
+.nl .lbl-2{fill:var(--c3); font-weight:800}
+.nl .thin{stroke:var(--ink-3); stroke-width:1.2; stroke-dasharray:4 4; fill:none}
+.nl .geo{stroke:var(--acc); stroke-width:2.5; fill:none}
+.nl .geo2{stroke:var(--c3); stroke-width:2.5; fill:none}
+
+/* Táctil: objetivos de al menos 44 px, sin dependencias del ratón */
+@media (pointer:coarse){
+  .jump button{min-height:40px; padding:6px 14px}
+  .ex-ctl button{min-height:46px}
+  .tab{min-height:46px}
+}
+@media (hover:none){
+  .tab:hover:not([aria-selected="true"]){background:transparent}
+  .jump button:hover{border-color:var(--line-2); color:var(--ink-2)}
+}
+/* Notch / barras del iPhone */
+.page{padding-left:max(clamp(16px,4vw,28px), env(safe-area-inset-left)); padding-right:max(clamp(16px,4vw,28px), env(safe-area-inset-right)); padding-bottom:max(56px, calc(env(safe-area-inset-bottom) + 28px))}
+.bar{margin-inline:calc(-1 * max(clamp(16px,4vw,28px), env(safe-area-inset-left)))}
+button, .tab{-webkit-tap-highlight-color:transparent; touch-action:manipulation}
+.ex-ctl button, .jump button, .tab{-webkit-user-select:none; user-select:none}
+/* iPad: aprovecha el ancho en horizontal sin perder la columna de lectura */
+@media (min-width:1000px){ .page{max-width:1060px} }
+/* Móvil: tamaño de letra legible y sin zoom */
+@media (max-width:760px){
+  .panel-num{width:44px; height:44px; font-size:1.25rem; border-radius:13px}
+  .panel-head{gap:10px}
+  .ex-steps > li.cur{padding-left:38px}
+}
+
+.m .fit + .fit{margin-top:.35em}
+.three{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:10px}
+@media (max-width:760px){ .three{grid-template-columns:1fr} }
+.props.three{grid-template-columns:repeat(3, minmax(0,1fr))}
+@media (max-width:900px){ .props.three{grid-template-columns:1fr} }
+/* Fórmulas largas dentro de una frase: no ensanchan la página, se desplazan dentro de su caja */
+.im-long{display:inline-block; max-width:100%; overflow-x:auto; overflow-y:hidden; vertical-align:middle; -webkit-overflow-scrolling:touch}
+.fig svg.sq{max-width:340px}
