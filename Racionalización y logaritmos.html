@@ -2,13 +2,13 @@
 <html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#f2f6fa">
-<meta name="color-scheme" content="light dark">
+<meta name="color-scheme" content="light">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Números reales">
 <meta name="description" content="Tema 1 de Matemáticas I (1.º Bachillerato): números reales, intervalos, valor absoluto, radicales, potencias y logaritmos, paso a paso.">
 <title>Números reales · Tema 1 · Matemáticas I</title>
-<script>try{var m=localStorage.getItem('t1-mode')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.mode=m}catch(e){}</script>
+<script>try{document.documentElement.dataset.mode=localStorage.getItem('t1-mode')==='dark'?'dark':'light'}catch(e){document.documentElement.dataset.mode='light'}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;600;700;800&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Caveat:wght@600&display=swap">
@@ -136,40 +136,52 @@ button.chip:active{transform:translateY(2px); box-shadow:0 0 0 var(--line-2)}
 @keyframes fadein{to{opacity:1}}
 @keyframes pop{from{opacity:0; transform:translateY(8px) scale(.6)} to{opacity:1; transform:none}}
 
-/* ---------- Navegación: la recta de los 11 apartados ---------- */
-.bar{position:sticky; top:0; z-index:30; margin-top:18px; margin-inline:calc(-1 * max(clamp(14px,4vw,28px), env(safe-area-inset-left)));
+/* ---------- Navegación: los 11 apartados, con nombre ---------- */
+.toc{margin-top:22px}
+.toc-title{font:800 .72rem/1 var(--f-body); letter-spacing:.14em; text-transform:uppercase; color:var(--ink-2); margin-bottom:10px}
+.toc-list{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(auto-fill, minmax(214px, 1fr)); gap:9px}
+.toc-list li, .pop-list li{min-width:0}
+.nv{position:relative; overflow:hidden; display:flex; align-items:center; gap:11px; width:100%; min-height:54px; padding:8px 12px 10px 9px; text-align:left; border:1.5px solid var(--line-2); border-radius:15px; background:var(--card); color:var(--ink); box-shadow:0 3px 0 var(--line-2); transition:transform .12s, box-shadow .12s, background .2s, border-color .2s; -webkit-tap-highlight-color:transparent; touch-action:manipulation}
+.nv:hover{border-color:var(--h)}
+.nv:active{transform:translateY(3px); box-shadow:0 0 0 var(--line-2)}
+.nv-n{flex:none; width:32px; height:32px; border-radius:10px; display:grid; place-items:center; background:color-mix(in srgb, var(--h) 15%, var(--card)); color:var(--h); font:800 1rem/1 var(--f-head)}
+.nv-t{font-weight:700; font-size:.97rem; line-height:1.16; min-width:0}
+.nv-p{position:absolute; left:0; bottom:0; height:5px; width:calc(var(--p, 0) * 1%); background:var(--h); border-radius:0 3px 3px 0; transition:width .5s}
+.nv[aria-selected="true"]{background:var(--h); border-color:var(--h); color:var(--on-h); box-shadow:0 3px 0 color-mix(in srgb, var(--h) 55%, #000)}
+.nv[aria-selected="true"] .nv-n{background:rgba(255,255,255,.24); color:var(--on-h)}
+.nv[aria-selected="true"] .nv-p{background:rgba(255,255,255,.7)}
+.nv[aria-selected="true"]:active{box-shadow:0 0 0 transparent}
+
+.bar{position:sticky; top:0; z-index:30; margin-top:6px; margin-inline:calc(-1 * max(clamp(14px,4vw,28px), env(safe-area-inset-left)));
   padding:max(8px, env(safe-area-inset-top)) max(clamp(14px,4vw,28px), env(safe-area-inset-left)) 8px;
-  background:color-mix(in srgb, var(--paper) 86%, transparent); backdrop-filter:blur(14px) saturate(1.3); -webkit-backdrop-filter:blur(14px) saturate(1.3); border-bottom:1.5px solid var(--line-2)}
-.nv-line{list-style:none; margin:0; padding:0; display:flex; justify-content:space-between; position:relative; --at:0}
-.nv-line::before{content:''; position:absolute; left:14px; right:14px; top:50%; height:4px; margin-top:-2px; border-radius:2px; background:var(--line-2)}
-.nv-line::after{content:''; position:absolute; left:14px; top:50%; height:4px; margin-top:-2px; border-radius:2px; background:var(--cur); width:calc((100% - 28px) * var(--at)); transition:width .45s cubic-bezier(.3,.7,.2,1), background .3s}
-.nv-line li{position:relative; z-index:1; flex:1 1 0; display:flex; justify-content:center}
-.nv{position:relative; width:100%; max-width:46px; height:44px; padding:0; border:0; background:transparent; display:grid; place-items:center; -webkit-tap-highlight-color:transparent; touch-action:manipulation}
-.nv-dot{position:relative; width:30px; height:30px; border-radius:50%; display:grid; place-items:center; font:800 .82rem/1 var(--f-head); color:var(--ink);
-  background:conic-gradient(var(--h) calc(var(--p, 0) * 1%), var(--line-2) 0); transition:transform .25s cubic-bezier(.3,1.5,.5,1), box-shadow .25s}
-.nv-dot::before{content:''; position:absolute; inset:3.5px; border-radius:50%; background:var(--card); transition:background .2s}
-.nv-dot span{position:relative}
-.nv[aria-selected="true"] .nv-dot{transform:scale(1.28); box-shadow:0 3px 0 color-mix(in srgb, var(--h) 45%, transparent), 0 0 0 4px color-mix(in srgb, var(--h) 18%, transparent)}
-.nv[aria-selected="true"] .nv-dot::before{background:var(--h)}
-.nv[aria-selected="true"] .nv-dot span{color:var(--on-h)}
-.nv:hover .nv-dot{transform:scale(1.14)}
-.nv[aria-selected="true"]:hover .nv-dot{transform:scale(1.28)}
-.nv-sub{display:flex; align-items:center; gap:8px; margin-top:2px}
-.nv-arrow{flex:none; width:42px; height:42px; display:grid; place-items:center; border:0; background:transparent; border-radius:50%; color:var(--ink); transition:background .15s}
-.nv-arrow:hover{background:var(--card)}
-.nv-arrow:disabled{opacity:.25; cursor:default}
+  background:color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter:blur(14px) saturate(1.3); -webkit-backdrop-filter:blur(14px) saturate(1.3); border-bottom:1.5px solid var(--line-2)}
+.nv-sub{display:flex; align-items:center; gap:8px}
+.nv-arrow{flex:none; width:44px; height:44px; display:grid; place-items:center; border:1.5px solid var(--line-2); background:var(--card); border-radius:14px; color:var(--ink); box-shadow:0 2px 0 var(--line-2); transition:transform .1s, box-shadow .1s}
+.nv-arrow:active{transform:translateY(2px); box-shadow:0 0 0 var(--line-2)}
+.nv-arrow:disabled{opacity:.3; box-shadow:none}
 .nv-arrow svg{width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round}
-.nv-title{flex:1; min-width:0; font:800 1.05rem/1.2 var(--f-head); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; text-align:center; color:var(--ink); letter-spacing:-.01em}
-.nv-title b{color:var(--cur); margin-right:6px; font-weight:800}
-.nv-jump{flex:none; display:inline-flex; align-items:center; gap:6px; min-height:40px; padding:4px 12px 4px 14px; border-radius:999px; border:1.5px solid var(--line-2); background:var(--card); font-weight:700; font-size:.88rem; color:var(--ink); box-shadow:0 2px 0 var(--line-2)}
-.nv-jump svg{width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round; transition:transform .2s}
-.nv-jump[aria-expanded="true"] svg{transform:rotate(180deg)}
-.jump-pop{position:absolute; left:max(clamp(14px,4vw,28px), env(safe-area-inset-left)); right:max(clamp(14px,4vw,28px), env(safe-area-inset-right)); top:100%; margin-top:8px; max-height:min(62vh, 440px); overflow:auto; padding:8px; border-radius:18px; background:var(--card); border:1.5px solid var(--line-2); box-shadow:0 18px 40px -12px rgba(8,20,40,.35)}
+.nv-title{flex:1; min-width:0; display:flex; align-items:center; justify-content:center; gap:9px; min-height:44px; padding:4px 12px; border:1.5px solid var(--cur); border-radius:14px; background:color-mix(in srgb, var(--cur) 11%, var(--card)); color:var(--ink); font:800 1.02rem/1.15 var(--f-head); letter-spacing:-.01em; box-shadow:0 2px 0 color-mix(in srgb, var(--cur) 45%, transparent); -webkit-tap-highlight-color:transparent}
+.nv-title b{flex:none; display:grid; place-items:center; min-width:28px; height:28px; border-radius:9px; background:var(--cur); color:var(--on-h); font-weight:800; font-size:.95rem}
+.nv-title span{min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.nv-title svg, .nv-jump svg{flex:none; width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round; transition:transform .2s}
+.nv-title[aria-expanded="true"] svg, .nv-jump[aria-expanded="true"] svg{transform:rotate(180deg)}
+.nv-jump{flex:none; display:inline-flex; align-items:center; gap:6px; min-height:44px; padding:4px 12px 4px 14px; border-radius:14px; border:1.5px solid var(--line-2); background:var(--card); font-weight:700; font-size:.9rem; color:var(--ink); box-shadow:0 2px 0 var(--line-2)}
+.pop{position:absolute; left:max(clamp(14px,4vw,28px), env(safe-area-inset-left)); right:max(clamp(14px,4vw,28px), env(safe-area-inset-right)); top:100%; margin-top:8px; max-height:min(72vh, 520px); overflow:auto; padding:10px; border-radius:20px; background:var(--card); border:1.5px solid var(--line-2); box-shadow:0 18px 40px -12px rgba(8,20,40,.35)}
+.pop-list{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:7px}
+.pop-list .nv .pop-c{margin-left:auto; flex:none; font-weight:800; font-size:.8rem; opacity:.75; white-space:nowrap}
 .jump{display:grid; grid-template-columns:repeat(auto-fill, minmax(190px, 1fr)); gap:4px}
-.jump button{text-align:left; border:0; background:transparent; border-radius:12px; padding:10px 12px; min-height:44px; font-weight:700; font-size:.95rem; color:var(--ink); display:flex; align-items:center; gap:10px}
+.jump button{text-align:left; border:0; background:transparent; border-radius:12px; padding:10px 12px; min-height:46px; font-weight:700; font-size:.95rem; color:var(--ink); display:flex; align-items:center; gap:10px}
 .jump button::before{content:''; flex:none; width:9px; height:9px; border-radius:50%; background:var(--cur)}
 .jump button:hover{background:var(--card-2)}
-@media (max-width:520px){ .nv-jump span{display:none} .nv-jump{padding:4px 10px} .nv-title{font-size:.98rem} }
+@media (max-width:620px){
+  .toc-list, .pop-list{grid-template-columns:repeat(2, minmax(0,1fr)); gap:8px}
+  .nv{padding:7px 8px 10px 7px; gap:8px; min-height:56px}
+  .nv-n{width:28px; height:28px; border-radius:9px; font-size:.9rem}
+  .nv-t{font-size:.9rem}
+  .nv-jump span{display:none} .nv-jump{padding:4px 10px}
+  .nv-title{font-size:.95rem; padding-inline:9px; gap:7px}
+  .nv-arrow{width:42px}
+}
 
 /* ---------- Apartado ---------- */
 main{padding-top:4px}
@@ -375,10 +387,8 @@ main{padding-top:4px}
 @media (max-width:380px){
   .blk{padding-inline:13px 11px}
   .ex-steps .m math, .ex-res math{font-size:.94em}
-  .nv-dot{width:27px; height:27px; font-size:.74rem}
 }
 @media (pointer:coarse){ .jump button, .pr-item{min-height:48px} }
-@media (hover:none){ .nv:hover .nv-dot{transform:none} .nv[aria-selected="true"]:hover .nv-dot{transform:scale(1.28)} }
 
 /* ---------- Imprimir: todo desplegado ---------- */
 @media print{
@@ -410,18 +420,22 @@ main{padding-top:4px}
     <span class="chip" id="chip-exam" data-date="2026-10-05"><span class="dot"></span><span id="chip-exam-t">Examen · lunes 5 de octubre</span></span>
     <button type="button" class="chip" id="chip-prog" aria-haspopup="dialog"><span class="bar-mini"><i></i></span><span id="chip-prog-t">Mi progreso</span></button>
   </div>
+  <nav class="toc" aria-label="Apartados del tema">
+    <div class="toc-title">Apartados del tema</div>
+    <ol class="toc-list" role="tablist"><li><button type="button" role="tab" class="nv" id="tab-reales" aria-controls="panel-reales" data-tab="reales" data-num="1" data-title="Números reales" data-hue="#0e6f8c" style="--hue:#0e6f8c"><span class="nv-n">1</span><span class="nv-t">Números reales</span><i class="nv-p"></i></button></li><li><button type="button" role="tab" class="nv" id="tab-desigualdades" aria-controls="panel-desigualdades" data-tab="desigualdades" data-num="2" data-title="Desigualdades" data-hue="#6d3fd3" style="--hue:#6d3fd3"><span class="nv-n">2</span><span class="nv-t">Desigualdades</span><i class="nv-p"></i></button></li><li><button type="button" role="tab" class="nv" id="tab-recta" aria-controls="panel-recta" data-tab="recta" data-num="3" data-title="La recta real" data-hue="#0b6b4f" style="--hue:#0b6b4f"><span class="nv-n">3</span><span class="nv-t">La recta real</span><i class="nv-p"></i></button></li><li><button type="button" role="tab" class="nv" id="tab-valor-absoluto" aria-controls="panel-valor-absoluto" data-tab="valor-absoluto" data-num="4" data-title="Valor absoluto" data-hue="#b8304d" style="--hue:#b8304d"><span class="nv-n">4</span><span class="nv-t">Valor absoluto</span><i class="nv-p"></i></button></li><li><button type="button" role="tab" class="nv" id="tab-intervalos" aria-controls="panel-intervalos" data-tab="intervalos" data-num="5" data-title="Intervalos" data-hue="#3b4fc4" style="--hue:#3b4fc4"><span class="nv-n">5</span><span class="nv-t">Intervalos</span><i class="nv-p"></i></button></li><li><button type="button" role="tab" class="nv" id="tab-aproximaciones" aria-controls="panel-aproximaciones" data-tab="aproximaciones" data-num="6" data-title="Aproximaciones" data-hue="#8a5a00" style="--hue:#8a5a00"><span class="nv-n">6</span><span class="nv-t">Aproximaciones</span><i class="nv-p"></i></button></li><li><button type="button" role="tab" class="nv" id="tab-notacion" aria-controls="panel-notacion" data-tab="notacion" data-num="7" data-title="Notación científica" data-hue="#a1308f" style="--hue:#a1308f"><span class="nv-n">7</span><span class="nv-t">Notación científica</span><i class="nv-p"></i></button></li><li><button type="button" role="tab" class="nv" id="tab-radicales" aria-controls="panel-radicales" data-tab="radicales" data-num="8" data-title="Radicales" data-hue="#2451c7" style="--hue:#2451c7"><span class="nv-n">8</span><span class="nv-t">Radicales</span><i class="nv-p"></i></button></li><li><button type="button" role="tab" class="nv" id="tab-potencias" aria-controls="panel-potencias" data-tab="potencias" data-num="9" data-title="Potencias" data-hue="#3f6f0d" style="--hue:#3f6f0d"><span class="nv-n">9</span><span class="nv-t">Potencias</span><i class="nv-p"></i></button></li><li><button type="button" role="tab" class="nv" id="tab-logaritmos" aria-controls="panel-logaritmos" data-tab="logaritmos" data-num="10" data-title="Logaritmos" data-hue="#9a4f07" style="--hue:#9a4f07"><span class="nv-n">10</span><span class="nv-t">Logaritmos</span><i class="nv-p"></i></button></li><li><button type="button" role="tab" class="nv" id="tab-finales" aria-controls="panel-finales" data-tab="finales" data-num="11" data-title="Ejercicios finales" data-hue="#334155" style="--hue:#334155"><span class="nv-n">11</span><span class="nv-t">Ejercicios finales</span><i class="nv-p"></i></button></li></ol>
+  </nav>
   <div class="hero-line"><svg viewBox="0 0 560 128" role="img" aria-label="La recta real con números enteros, racionales e irracionales marcados"><path class="hl-ax" pathLength="1" d="M18,88 H546"/><path class="hl-ax" pathLength="1" d="M546,88 l-12,-7 M546,88 l-12,7"/><line class="hl-tk" x1="46" y1="80" x2="46" y2="96"/><line class="hl-tk" x1="124" y1="80" x2="124" y2="96"/><line class="hl-tk" x1="202" y1="80" x2="202" y2="96"/><line class="hl-tk" x1="280" y1="80" x2="280" y2="96"/><line class="hl-tk" x1="358" y1="80" x2="358" y2="96"/><line class="hl-tk" x1="436" y1="80" x2="436" y2="96"/><line class="hl-tk" x1="514" y1="80" x2="514" y2="96"/><g class="hp hp-q" style="--i:0"><circle cx="85" cy="88" r="9"/><text x="85" y="66">−3/2</text></g><g class="hp hp-z" style="--i:1"><circle cx="124" cy="88" r="9"/><text x="124" y="66">−1</text></g><g class="hp hp-z" style="--i:2"><circle cx="202" cy="88" r="9"/><text x="202" y="66">0</text></g><g class="hp hp-q" style="--i:3"><circle cx="241" cy="88" r="9"/><text x="241" y="66">1/2</text></g><g class="hp hp-i" style="--i:4"><circle cx="312.31" cy="88" r="9"/><text x="312.31" y="66">√2</text></g><g class="hp hp-z" style="--i:5"><circle cx="358" cy="88" r="9"/><text x="358" y="66">2</text></g><g class="hp hp-i" style="--i:6"><circle cx="414.03" cy="88" r="9"/><text x="414.03" y="66">e</text></g><g class="hp hp-i" style="--i:7"><circle cx="447.04" cy="88" r="9"/><text x="447.04" y="66">π</text></g></svg><div class="legend"><span class="l-z">enteros ℤ</span><span class="l-q">racionales ℚ</span><span class="l-i">irracionales 𝕀</span></div></div>
 </header>
 <div id="top-sentinel"></div>
 <div class="bar">
-  <ol class="nv-line" role="tablist" aria-label="Apartados del tema"><li><button type="button" role="tab" class="nv" id="tab-reales" aria-controls="panel-reales" data-tab="reales" data-num="1" data-title="Números reales" data-hue="#0e6f8c" title="1 · Números reales" style="--hue:#0e6f8c"><span class="nv-dot"><span>1</span></span></button></li><li><button type="button" role="tab" class="nv" id="tab-desigualdades" aria-controls="panel-desigualdades" data-tab="desigualdades" data-num="2" data-title="Desigualdades" data-hue="#6d3fd3" title="2 · Desigualdades" style="--hue:#6d3fd3"><span class="nv-dot"><span>2</span></span></button></li><li><button type="button" role="tab" class="nv" id="tab-recta" aria-controls="panel-recta" data-tab="recta" data-num="3" data-title="La recta real" data-hue="#0b6b4f" title="3 · La recta real" style="--hue:#0b6b4f"><span class="nv-dot"><span>3</span></span></button></li><li><button type="button" role="tab" class="nv" id="tab-valor-absoluto" aria-controls="panel-valor-absoluto" data-tab="valor-absoluto" data-num="4" data-title="Valor absoluto" data-hue="#b8304d" title="4 · Valor absoluto" style="--hue:#b8304d"><span class="nv-dot"><span>4</span></span></button></li><li><button type="button" role="tab" class="nv" id="tab-intervalos" aria-controls="panel-intervalos" data-tab="intervalos" data-num="5" data-title="Intervalos" data-hue="#3b4fc4" title="5 · Intervalos" style="--hue:#3b4fc4"><span class="nv-dot"><span>5</span></span></button></li><li><button type="button" role="tab" class="nv" id="tab-aproximaciones" aria-controls="panel-aproximaciones" data-tab="aproximaciones" data-num="6" data-title="Aproximaciones" data-hue="#8a5a00" title="6 · Aproximaciones" style="--hue:#8a5a00"><span class="nv-dot"><span>6</span></span></button></li><li><button type="button" role="tab" class="nv" id="tab-notacion" aria-controls="panel-notacion" data-tab="notacion" data-num="7" data-title="Notación científica" data-hue="#a1308f" title="7 · Notación científica" style="--hue:#a1308f"><span class="nv-dot"><span>7</span></span></button></li><li><button type="button" role="tab" class="nv" id="tab-radicales" aria-controls="panel-radicales" data-tab="radicales" data-num="8" data-title="Radicales" data-hue="#2451c7" title="8 · Radicales" style="--hue:#2451c7"><span class="nv-dot"><span>8</span></span></button></li><li><button type="button" role="tab" class="nv" id="tab-potencias" aria-controls="panel-potencias" data-tab="potencias" data-num="9" data-title="Potencias" data-hue="#3f6f0d" title="9 · Potencias" style="--hue:#3f6f0d"><span class="nv-dot"><span>9</span></span></button></li><li><button type="button" role="tab" class="nv" id="tab-logaritmos" aria-controls="panel-logaritmos" data-tab="logaritmos" data-num="10" data-title="Logaritmos" data-hue="#9a4f07" title="10 · Logaritmos" style="--hue:#9a4f07"><span class="nv-dot"><span>10</span></span></button></li><li><button type="button" role="tab" class="nv" id="tab-finales" aria-controls="panel-finales" data-tab="finales" data-num="11" data-title="Ejercicios finales" data-hue="#334155" title="11 · Ejercicios finales" style="--hue:#334155"><span class="nv-dot"><span>11</span></span></button></li></ol>
   <div class="nv-sub">
     <button type="button" class="nv-arrow" id="nv-prev" aria-label="Apartado anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
-    <div class="nv-title" id="nv-title" aria-live="polite"></div>
+    <button type="button" class="nv-title" id="nv-title" aria-haspopup="true" aria-expanded="false" aria-label="Ver todos los apartados"><b></b><span></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9l7 7 7-7"/></svg></button>
     <button type="button" class="nv-jump" aria-haspopup="true" aria-expanded="false"><span>Saltar a</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9l7 7 7-7"/></svg></button>
     <button type="button" class="nv-arrow" id="nv-next" aria-label="Apartado siguiente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
   </div>
-  <div class="jump-pop" hidden><nav class="jump" data-for="reales" aria-label="Secciones de Números reales" hidden><button type="button" data-jump="rea-conj">Conjuntos numéricos</button><button type="button" data-jump="rea-dec">Expresión decimal</button><button type="button" data-jump="rea-gen">Fracción generatriz</button><button type="button" data-jump="rea-prop">Propiedades</button><button type="button" data-jump="rea-prac">Practica</button></nav><nav class="jump" data-for="desigualdades" aria-label="Secciones de Desigualdades" hidden><button type="button" data-jump="des-ord">Orden en ℝ</button><button type="button" data-jump="des-prop">Operar con desigualdades</button><button type="button" data-jump="des-ordej">Ordenar números</button><button type="button" data-jump="des-prac">Practica</button><button type="button" data-jump="des-err">Errores típicos</button></nav><nav class="jump" data-for="recta" aria-label="Secciones de La recta real" hidden><button type="button" data-jump="rec-idea">La recta real</button><button type="button" data-jump="rec-ent">Enteros</button><button type="button" data-jump="rec-rac">Racionales (Tales)</button><button type="button" data-jump="rec-irr">Irracionales (Pitágoras)</button><button type="button" data-jump="rec-enc">Otros irracionales</button><button type="button" data-jump="rec-prac">Practica</button></nav><nav class="jump" data-for="valor-absoluto" aria-label="Secciones de Valor absoluto" hidden><button type="button" data-jump="abs-def">Qué es</button><button type="button" data-jump="abs-prop">Propiedades</button><button type="button" data-jump="abs-quitar">Desarrollar</button><button type="button" data-jump="abs-ec">Ecuaciones</button><button type="button" data-jump="abs-err">Errores típicos</button></nav><nav class="jump" data-for="intervalos" aria-label="Secciones de Intervalos" hidden><button type="button" data-jump="int-int">Intervalos</button><button type="button" data-jump="int-sem">Semirrectas</button><button type="button" data-jump="int-ent">Entornos</button><button type="button" data-jump="int-op">Unión e intersección</button><button type="button" data-jump="int-trad">Traducir</button><button type="button" data-jump="int-err">Errores típicos</button></nav><nav class="jump" data-for="aproximaciones" aria-label="Secciones de Aproximaciones" hidden><button type="button" data-jump="apr-def">Aproximar</button><button type="button" data-jump="apr-err">Error absoluto y relativo</button><button type="button" data-jump="apr-errs">Errores típicos</button></nav><nav class="jump" data-for="notacion" aria-label="Secciones de Notación científica" hidden><button type="button" data-jump="not-def">Qué es</button><button type="button" data-jump="not-op">Operaciones</button><button type="button" data-jump="not-err">Errores típicos</button></nav><nav class="jump" data-for="radicales" aria-label="Secciones de Radicales" hidden><button type="button" data-jump="rad-def">Qué es una raíz</button><button type="button" data-jump="rad-prop">Propiedades</button><button type="button" data-jump="rad-comun">Común índice</button><button type="button" data-jump="rad-ext">Extraer e introducir</button><button type="button" data-jump="rad-suma">Suma de radicales</button><button type="button" data-jump="rad-err">Errores típicos</button><button type="button" data-jump="rad-comb">Opera y simplifica</button><button type="button" data-jump="rac-idea">Racionalizar</button><button type="button" data-jump="rac-c1">Caso 1</button><button type="button" data-jump="rac-c2">Caso 2</button><button type="button" data-jump="rac-c3">Caso 3</button><button type="button" data-jump="rac-err">Errores (racionalizar)</button><button type="button" data-jump="rac-col">Ejercicios del colegio</button><button type="button" data-jump="rac-add">Más racionalización</button></nav><nav class="jump" data-for="potencias" aria-label="Secciones de Potencias" hidden><button type="button" data-jump="pot-def">Definición</button><button type="button" data-jump="pot-prop">Propiedades</button><button type="button" data-jump="pot-err">Errores típicos</button><button type="button" data-jump="pot-prac">Practica</button></nav><nav class="jump" data-for="logaritmos" aria-label="Secciones de Logaritmos" hidden><button type="button" data-jump="log-idea">La idea</button><button type="button" data-jump="log-prop">Propiedades</button><button type="button" data-jump="log-err">Lo que NO se puede</button><button type="button" data-jump="log-def">Por definición</button><button type="button" data-jump="log-x">Halla x</button><button type="button" data-jump="log-prop-ej">Reduce</button><button type="button" data-jump="log-datos">Con datos</button><button type="button" data-jump="log-desarr">Desarrollar</button><button type="button" data-jump="log-ec">Ecuaciones</button><button type="button" data-jump="log-apl">Aplicaciones</button><button type="button" data-jump="log-add">Más ejercicios</button></nav><nav class="jump" data-for="finales" aria-label="Secciones de Ejercicios finales" hidden><button type="button" data-jump="fin-reales">Números reales (1–6)</button><button type="button" data-jump="fin-abs">Valor absoluto e intervalos (7–9)</button><button type="button" data-jump="fin-pot">Potencias y radicales (10–13)</button><button type="button" data-jump="fin-log">Logaritmos (14–19)</button><button type="button" data-jump="fin-sint">Síntesis (20–24)</button><button type="button" data-jump="fin-teo">Cuestiones teóricas (25–26)</button></nav></div>
+  <div class="pop pop-apartados" hidden><ol class="pop-list"><li><button type="button" class="nv" data-pop="reales" data-hue="#0e6f8c" style="--hue:#0e6f8c"><span class="nv-n">1</span><span class="nv-t">Números reales</span><span class="pop-c"></span></button></li><li><button type="button" class="nv" data-pop="desigualdades" data-hue="#6d3fd3" style="--hue:#6d3fd3"><span class="nv-n">2</span><span class="nv-t">Desigualdades</span><span class="pop-c"></span></button></li><li><button type="button" class="nv" data-pop="recta" data-hue="#0b6b4f" style="--hue:#0b6b4f"><span class="nv-n">3</span><span class="nv-t">La recta real</span><span class="pop-c"></span></button></li><li><button type="button" class="nv" data-pop="valor-absoluto" data-hue="#b8304d" style="--hue:#b8304d"><span class="nv-n">4</span><span class="nv-t">Valor absoluto</span><span class="pop-c"></span></button></li><li><button type="button" class="nv" data-pop="intervalos" data-hue="#3b4fc4" style="--hue:#3b4fc4"><span class="nv-n">5</span><span class="nv-t">Intervalos</span><span class="pop-c"></span></button></li><li><button type="button" class="nv" data-pop="aproximaciones" data-hue="#8a5a00" style="--hue:#8a5a00"><span class="nv-n">6</span><span class="nv-t">Aproximaciones</span><span class="pop-c"></span></button></li><li><button type="button" class="nv" data-pop="notacion" data-hue="#a1308f" style="--hue:#a1308f"><span class="nv-n">7</span><span class="nv-t">Notación científica</span><span class="pop-c"></span></button></li><li><button type="button" class="nv" data-pop="radicales" data-hue="#2451c7" style="--hue:#2451c7"><span class="nv-n">8</span><span class="nv-t">Radicales</span><span class="pop-c"></span></button></li><li><button type="button" class="nv" data-pop="potencias" data-hue="#3f6f0d" style="--hue:#3f6f0d"><span class="nv-n">9</span><span class="nv-t">Potencias</span><span class="pop-c"></span></button></li><li><button type="button" class="nv" data-pop="logaritmos" data-hue="#9a4f07" style="--hue:#9a4f07"><span class="nv-n">10</span><span class="nv-t">Logaritmos</span><span class="pop-c"></span></button></li><li><button type="button" class="nv" data-pop="finales" data-hue="#334155" style="--hue:#334155"><span class="nv-n">11</span><span class="nv-t">Ejercicios finales</span><span class="pop-c"></span></button></li></ol></div>
+  <div class="pop jump-pop" hidden><nav class="jump" data-for="reales" aria-label="Secciones de Números reales" hidden><button type="button" data-jump="rea-conj">Conjuntos numéricos</button><button type="button" data-jump="rea-dec">Expresión decimal</button><button type="button" data-jump="rea-gen">Fracción generatriz</button><button type="button" data-jump="rea-prop">Propiedades</button><button type="button" data-jump="rea-prac">Practica</button></nav><nav class="jump" data-for="desigualdades" aria-label="Secciones de Desigualdades" hidden><button type="button" data-jump="des-ord">Orden en ℝ</button><button type="button" data-jump="des-prop">Operar con desigualdades</button><button type="button" data-jump="des-ordej">Ordenar números</button><button type="button" data-jump="des-prac">Practica</button><button type="button" data-jump="des-err">Errores típicos</button></nav><nav class="jump" data-for="recta" aria-label="Secciones de La recta real" hidden><button type="button" data-jump="rec-idea">La recta real</button><button type="button" data-jump="rec-ent">Enteros</button><button type="button" data-jump="rec-rac">Racionales (Tales)</button><button type="button" data-jump="rec-irr">Irracionales (Pitágoras)</button><button type="button" data-jump="rec-enc">Otros irracionales</button><button type="button" data-jump="rec-prac">Practica</button></nav><nav class="jump" data-for="valor-absoluto" aria-label="Secciones de Valor absoluto" hidden><button type="button" data-jump="abs-def">Qué es</button><button type="button" data-jump="abs-prop">Propiedades</button><button type="button" data-jump="abs-quitar">Desarrollar</button><button type="button" data-jump="abs-ec">Ecuaciones</button><button type="button" data-jump="abs-err">Errores típicos</button></nav><nav class="jump" data-for="intervalos" aria-label="Secciones de Intervalos" hidden><button type="button" data-jump="int-int">Intervalos</button><button type="button" data-jump="int-sem">Semirrectas</button><button type="button" data-jump="int-ent">Entornos</button><button type="button" data-jump="int-op">Unión e intersección</button><button type="button" data-jump="int-trad">Traducir</button><button type="button" data-jump="int-err">Errores típicos</button></nav><nav class="jump" data-for="aproximaciones" aria-label="Secciones de Aproximaciones" hidden><button type="button" data-jump="apr-def">Aproximar</button><button type="button" data-jump="apr-err">Error absoluto y relativo</button><button type="button" data-jump="apr-errs">Errores típicos</button></nav><nav class="jump" data-for="notacion" aria-label="Secciones de Notación científica" hidden><button type="button" data-jump="not-def">Qué es</button><button type="button" data-jump="not-op">Operaciones</button><button type="button" data-jump="not-err">Errores típicos</button></nav><nav class="jump" data-for="radicales" aria-label="Secciones de Radicales" hidden><button type="button" data-jump="rad-def">Qué es una raíz</button><button type="button" data-jump="rad-prop">Propiedades</button><button type="button" data-jump="rad-comun">Común índice</button><button type="button" data-jump="rad-ext">Extraer e introducir</button><button type="button" data-jump="rad-suma">Suma de radicales</button><button type="button" data-jump="rad-err">Errores típicos</button><button type="button" data-jump="rad-comb">Opera y simplifica</button><button type="button" data-jump="rac-idea">Racionalizar</button><button type="button" data-jump="rac-c1">Caso 1</button><button type="button" data-jump="rac-c2">Caso 2</button><button type="button" data-jump="rac-c3">Caso 3</button><button type="button" data-jump="rac-err">Errores (racionalizar)</button><button type="button" data-jump="rac-col">Ejercicios del colegio</button><button type="button" data-jump="rac-add">Más racionalización</button></nav><nav class="jump" data-for="potencias" aria-label="Secciones de Potencias" hidden><button type="button" data-jump="pot-def">Definición</button><button type="button" data-jump="pot-prop">Propiedades</button><button type="button" data-jump="pot-err">Errores típicos</button><button type="button" data-jump="pot-prac">Practica</button></nav><nav class="jump" data-for="logaritmos" aria-label="Secciones de Logaritmos" hidden><button type="button" data-jump="log-idea">La idea</button><button type="button" data-jump="log-prop">Propiedades</button><button type="button" data-jump="log-err">Lo que NO se puede</button><button type="button" data-jump="log-def">Por definición</button><button type="button" data-jump="log-x">Halla x</button><button type="button" data-jump="log-prop-ej">Reduce</button><button type="button" data-jump="log-datos">Con datos</button><button type="button" data-jump="log-desarr">Desarrollar</button><button type="button" data-jump="log-ec">Ecuaciones</button><button type="button" data-jump="log-apl">Aplicaciones</button><button type="button" data-jump="log-add">Más ejercicios</button></nav><nav class="jump" data-for="finales" aria-label="Secciones de Ejercicios finales" hidden><button type="button" data-jump="fin-reales">Números reales (1–6)</button><button type="button" data-jump="fin-abs">Valor absoluto e intervalos (7–9)</button><button type="button" data-jump="fin-pot">Potencias y radicales (10–13)</button><button type="button" data-jump="fin-log">Logaritmos (14–19)</button><button type="button" data-jump="fin-sint">Síntesis (20–24)</button><button type="button" data-jump="fin-teo">Cuestiones teóricas (25–26)</button></nav></div>
 </div>
 <main>
 <div class="panel p1" role="tabpanel" id="panel-reales" aria-labelledby="tab-reales" style="--hue:#0e6f8c" hidden><div class="panel-head"><span class="panel-num">1</span><div><h2 class="panel-title">Números reales</h2><p class="panel-lead">Conjuntos numéricos, expresión decimal, fracción generatriz y propiedades.</p></div></div><section class="blk blk-intro" id="rea-conj"><h2>Los conjuntos de números</h2><p>Los números se agrupan en <b>conjuntos</b>, cada uno dentro del siguiente. Conviene saber a cuál pertenece cada número.</p>
@@ -893,13 +907,13 @@ main{padding-top:4px}
   var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   root.lang = 'es';
 
-  /* ---------- Modo claro / pizarra ---------- */
+  /* ---------- Modo claro (por defecto) / pizarra (si lo activas) ---------- */
   var themeMeta = $('meta[name="theme-color"]');
   function applyMode(m) {
     root.dataset.mode = m;
     if (themeMeta) themeMeta.setAttribute('content', m === 'dark' ? '#0c1a1e' : '#f2f6fa');
   }
-  applyMode(store.get('t1-mode') || (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+  applyMode(store.get('t1-mode') === 'dark' ? 'dark' : 'light');
   $('#btn-mode').addEventListener('click', function () {
     var m = root.dataset.mode === 'dark' ? 'light' : 'dark';
     applyMode(m); store.set('t1-mode', m);
@@ -922,28 +936,33 @@ main{padding-top:4px}
   function saveDone() { store.set('t1-done', JSON.stringify(Object.keys(done))); }
 
   /* ---------- Apartados ---------- */
-  var nodes = $$('.nv'), ids = nodes.map(function (n) { return n.dataset.tab; });
-  var bar = $('.bar'), line = $('.nv-line');
+  var nodes = $$('.toc .nv'), ids = nodes.map(function (n) { return n.dataset.tab; });
+  var popItems = $$('.pop-list .nv');
+  var bar = $('.bar');
   var btnPrev = $('#nv-prev'), btnNext = $('#nv-next'), title = $('#nv-title');
-  var pop = $('.jump-pop'), btnJump = $('.nv-jump');
+  var popApt = $('.pop-apartados'), popJump = $('.jump-pop'), btnJump = $('.nv-jump');
   var cur = 0;
 
-  function closePop() { pop.hidden = true; btnJump.setAttribute('aria-expanded', 'false'); }
+  function closePops() {
+    popApt.hidden = true; popJump.hidden = true;
+    title.setAttribute('aria-expanded', 'false'); btnJump.setAttribute('aria-expanded', 'false');
+  }
   function show(id, toTop) {
     var i = ids.indexOf(id); if (i < 0) { i = 0; id = ids[0]; }
     cur = i;
     nodes.forEach(function (n, k) { var on = k === i; n.setAttribute('aria-selected', on ? 'true' : 'false'); n.tabIndex = on ? 0 : -1; });
+    popItems.forEach(function (n, k) { n.setAttribute('aria-selected', k === i ? 'true' : 'false'); });
     $$('.panel').forEach(function (p) { p.hidden = p.id !== 'panel-' + id; });
     $$('.jump').forEach(function (j) { j.hidden = j.dataset.for !== id; });
     var n = nodes[i];
     bar.style.setProperty('--hue-cur', n.dataset.hue);
-    line.style.setProperty('--at', ids.length > 1 ? i / (ids.length - 1) : 0);
-    title.innerHTML = '<b>' + n.dataset.num + '</b>' + n.dataset.title;
+    $('b', title).textContent = n.dataset.num;
+    $('span', title).textContent = n.dataset.title;
     btnPrev.disabled = i === 0; btnNext.disabled = i === ids.length - 1;
     root.dataset.tab = id;
     store.set('t1-tab', id);
     try { history.replaceState(null, '', '#' + id); } catch (e) { /* marco sin historial */ }
-    closePop();
+    closePops();
     if (toTop) {
       var s = $('#top-sentinel');
       window.scrollTo({ top: s ? s.getBoundingClientRect().top + window.pageYOffset - 2 : 0, behavior: reduced ? 'auto' : 'smooth' });
@@ -951,7 +970,8 @@ main{padding-top:4px}
     fit($('#panel-' + id));
   }
   nodes.forEach(function (n) { n.addEventListener('click', function () { show(n.dataset.tab, true); }); });
-  line.addEventListener('keydown', function (e) {
+  popItems.forEach(function (n) { n.addEventListener('click', function () { show(n.dataset.pop, true); }); });
+  $('.toc-list').addEventListener('keydown', function (e) {
     if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
     var k = Math.max(0, Math.min(ids.length - 1, cur + (e.key === 'ArrowRight' ? 1 : -1)));
     show(ids[k], false); nodes[k].focus(); e.preventDefault();
@@ -965,20 +985,22 @@ main{padding-top:4px}
     if (k >= 0 && k < ids.length) show(ids[k], true);
   });
 
-  /* Saltar a una sección del apartado actual */
-  btnJump.addEventListener('click', function (e) {
-    e.stopPropagation();
+  /* Menús desplegables de la barra: todos los apartados / saltar a una sección */
+  function togglePop(pop, btn, other, otherBtn) {
     var open = pop.hidden;
-    pop.hidden = !open; btnJump.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
-  pop.addEventListener('click', function (e) {
+    other.hidden = true; otherBtn.setAttribute('aria-expanded', 'false');
+    pop.hidden = !open; btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  title.addEventListener('click', function (e) { e.stopPropagation(); togglePop(popApt, title, popJump, btnJump); });
+  btnJump.addEventListener('click', function (e) { e.stopPropagation(); togglePop(popJump, btnJump, popApt, title); });
+  popJump.addEventListener('click', function (e) {
     var b = e.target.closest('button[data-jump]'); if (!b) return;
     var el = document.getElementById(b.dataset.jump);
-    closePop();
+    closePops();
     if (el) el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
   });
-  document.addEventListener('click', function (e) { if (!pop.hidden && !pop.contains(e.target)) closePop(); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closePop(); closeSheet(); } });
+  document.addEventListener('click', function (e) { if ((!popApt.hidden || !popJump.hidden) && !bar.contains(e.target)) closePops(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closePops(); closeSheet(); } });
 
   /* ---------- Ejemplos y ejercicios: pasos que se van mostrando ---------- */
   var exs = $$('.ex');
@@ -1040,10 +1062,11 @@ main{padding-top:4px}
   }
   function refresh() {
     var T = 0, D = 0;
-    nodes.forEach(function (n) {
+    nodes.forEach(function (n, k) {
       var c = counts(n.dataset.tab); T += c.t; D += c.d;
       n.style.setProperty('--p', c.t ? Math.round(100 * c.d / c.t) : 0);
       n.setAttribute('aria-label', n.dataset.num + '. ' + n.dataset.title + (c.t ? ' · ' + c.d + ' de ' + c.t + ' ejercicios' : ''));
+      var pc = $('.pop-c', popItems[k]); if (pc) pc.textContent = c.t ? c.d + '/' + c.t : '';
     });
     var chip = $('#chip-prog');
     chip.style.setProperty('--pp', (T ? Math.round(100 * D / T) : 0) + '%');

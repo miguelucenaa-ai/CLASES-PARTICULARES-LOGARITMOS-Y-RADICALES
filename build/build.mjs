@@ -26,7 +26,8 @@ for (const f of order) {
 }
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
-const nodesHTML = list.map(P => `<li><button type="button" role="tab" class="nv" id="tab-${P.id}" aria-controls="panel-${P.id}" data-tab="${P.id}" data-num="${P.num}" data-title="${esc(P.tab)}" data-hue="${P.color[0]}" title="${P.num} · ${esc(P.tab)}" style="--hue:${P.color[0]}"><span class="nv-dot"><span>${P.num}</span></span></button></li>`).join('');
+const nodesHTML = list.map(P => `<li><button type="button" role="tab" class="nv" id="tab-${P.id}" aria-controls="panel-${P.id}" data-tab="${P.id}" data-num="${P.num}" data-title="${esc(P.tab)}" data-hue="${P.color[0]}" style="--hue:${P.color[0]}"><span class="nv-n">${P.num}</span><span class="nv-t">${esc(P.tab)}</span><i class="nv-p"></i></button></li>`).join('');
+const popHTML = list.map(P => `<li><button type="button" class="nv" data-pop="${P.id}" data-hue="${P.color[0]}" style="--hue:${P.color[0]}"><span class="nv-n">${P.num}</span><span class="nv-t">${esc(P.tab)}</span><span class="pop-c"></span></button></li>`).join('');
 const jumpHTML = list.map(P => `<nav class="jump" data-for="${P.id}" aria-label="Secciones de ${esc(P.tab)}" hidden>${P.sections.map(s => `<button type="button" data-jump="${s.id}">${s.jump}</button>`).join('')}</nav>`).join('');
 const panelsHTML = list.map((P, i) => buildPanel(P, list[i - 1], list[i + 1])).join('\n');
 
@@ -70,13 +71,13 @@ const html = `<!doctype html>
 <html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#f2f6fa">
-<meta name="color-scheme" content="light dark">
+<meta name="color-scheme" content="light">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Números reales">
 <meta name="description" content="Tema 1 de Matemáticas I (1.º Bachillerato): números reales, intervalos, valor absoluto, radicales, potencias y logaritmos, paso a paso.">
 <title>Números reales · Tema 1 · Matemáticas I</title>
-<script>try{var m=localStorage.getItem('t1-mode')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.mode=m}catch(e){}</script>
+<script>try{document.documentElement.dataset.mode=localStorage.getItem('t1-mode')==='dark'?'dark':'light'}catch(e){document.documentElement.dataset.mode='light'}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;600;700;800&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Caveat:wght@600&display=swap">
@@ -104,18 +105,22 @@ ${read('style.css')}
     <span class="chip" id="chip-exam" data-date="${EXAM}"><span class="dot"></span><span id="chip-exam-t">Examen · lunes 5 de octubre</span></span>
     <button type="button" class="chip" id="chip-prog" aria-haspopup="dialog"><span class="bar-mini"><i></i></span><span id="chip-prog-t">Mi progreso</span></button>
   </div>
+  <nav class="toc" aria-label="Apartados del tema">
+    <div class="toc-title">Apartados del tema</div>
+    <ol class="toc-list" role="tablist">${nodesHTML}</ol>
+  </nav>
   <div class="hero-line">${heroLine()}<div class="legend"><span class="l-z">enteros ℤ</span><span class="l-q">racionales ℚ</span><span class="l-i">irracionales 𝕀</span></div></div>
 </header>
 <div id="top-sentinel"></div>
 <div class="bar">
-  <ol class="nv-line" role="tablist" aria-label="Apartados del tema">${nodesHTML}</ol>
   <div class="nv-sub">
     <button type="button" class="nv-arrow" id="nv-prev" aria-label="Apartado anterior">${I.left}</button>
-    <div class="nv-title" id="nv-title" aria-live="polite"></div>
+    <button type="button" class="nv-title" id="nv-title" aria-haspopup="true" aria-expanded="false" aria-label="Ver todos los apartados"><b></b><span></span>${I.down}</button>
     <button type="button" class="nv-jump" aria-haspopup="true" aria-expanded="false"><span>Saltar a</span>${I.down}</button>
     <button type="button" class="nv-arrow" id="nv-next" aria-label="Apartado siguiente">${I.right}</button>
   </div>
-  <div class="jump-pop" hidden>${jumpHTML}</div>
+  <div class="pop pop-apartados" hidden><ol class="pop-list">${popHTML}</ol></div>
+  <div class="pop jump-pop" hidden>${jumpHTML}</div>
 </div>
 <main>
 ${panelsHTML}
